@@ -1,4 +1,13 @@
 import * as React from "react"
-export default function Login() {
-  return <div>Admin login page</div>
+import Layout from '../components/layout'
+
+const LoginPage = () => {
+  return (
+    <Layout pageTitle = "Log in">
+
+
+
+      
+    </Layout>
+  )
 }
