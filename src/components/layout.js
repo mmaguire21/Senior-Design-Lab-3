@@ -29,6 +29,11 @@ const Layout = ({ pageTitle, children }) => {
               Poll 
             </Link>
           </li>
+          <li className={navLinkItem}>
+            <Link to="/admin/create" className={navLinkText}>
+              Create
+            </Link>
+          </li>
         </ul>
       </nav>
       <main>
