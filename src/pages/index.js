@@ -181,4 +181,6 @@ const IndexPage = () => {
   )
 }
 
-export default IndexPage
+export default function Index() {
+  return <div>Home Page</div>
+}
