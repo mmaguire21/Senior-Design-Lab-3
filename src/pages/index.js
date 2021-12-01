@@ -4,10 +4,15 @@ import Layout from '../components/layout'
 
 const IndexPage = () => {
   return (
-    <Layout pageTitle="Home Page">
+    <><Layout pageTitle="Home Page">
       <p>Broken Engineers Doodle Poll</p>
-    </Layout>
+      <label> Looking for your next poll look no further! </label>
+
+
+  
+      </Layout></>
   )
 }
+
 
 export default IndexPage
