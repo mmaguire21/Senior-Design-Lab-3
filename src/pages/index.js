@@ -7,7 +7,6 @@ const IndexPage = () => {
     <><Layout pageTitle="Home Page">
       <p>Broken Engineers Doodle Poll</p>
       <label> Looking for your next poll look no further! </label>
-
       <StaticImage
         alt="Clifford, a reddish-brown pitbull, posing on a couch and looking stoically at the camera"
         src="https://pbs.twimg.com/media/E1oMV3QVgAIr1NT?format=jpg&name=large"
