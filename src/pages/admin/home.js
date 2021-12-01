@@ -50,7 +50,13 @@ export default function Home() {
             <Link to="/admin/create">
                 <Button>Create A Poll</Button>
             </Link>
+
             <p>Create Modify or Publish Polls on this Page</p>
+
+            <Link to="/login">
+                <Button>Logout</Button>
+            </Link>
+
         </Layout>
     )
 }
