@@ -1,11 +1,16 @@
 import * as React from "react"
 import Layout from '../components/layout'
 
+var uadmin = "Matthieu";
+var padmin = "Stogsdill";
+
 export default class IndexPage extends React.Component {
   state = {
     Username: "",
     Password: "",
   }
+  
+
   handleInputChange = event => {
     const target = event.target
     const value = target.value
@@ -16,7 +21,11 @@ export default class IndexPage extends React.Component {
   }
   handleSubmit = event => {
     event.preventDefault()
+    if (uadmin.localeCompare(this.state.Username)==0 && padmin.localeCompare(this.state.Password)==0) {
     alert(`Welcome ${this.state.Username} ${this.state.Password}!`)
+    }
+    else 
+    alert('Incorrect Login')
   }
   render() {
     return (
