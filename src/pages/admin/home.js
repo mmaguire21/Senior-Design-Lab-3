@@ -40,9 +40,35 @@ Button.defaultProps = {
     theme: "blue"
 };
 
-function clickMe() {
-    alert("You clicked me!");
+function remind() {
+    alert("Members of the poll have been reminded");
 }
+
+function publish() {
+    alert("The poll has been published")
+}
+
+const RenderList = props => {
+    const animals = ["Poll 1", "Poll 2", "Poll 3", "Poll 4", "Poll 5", "Poll 6"];
+
+    return (
+        <ul>
+            {animals.map(animal => (
+                <li>
+                    <nav>
+                        {animal}
+                        <text> </text>
+                        <Link to="/admin/modify">
+                            <button>(modify)</button>
+                        </Link>
+                        <button onClick={remind}>(remind)</button>
+                        <button onClick={publish}>(publish)</button>
+                    </nav>
+                </li>
+            ))}
+        </ul>
+    );
+};
 
 export default function Home() {
     return (
@@ -50,7 +76,14 @@ export default function Home() {
             <Link to="/admin/create">
                 <Button>Create A Poll</Button>
             </Link>
+
             <p>Create Modify or Publish Polls on this Page</p>
+
+            <RenderList/>
+
+            <Link to="/login">
+                <Button>Logout</Button>
+            </Link>
         </Layout>
     )
 }
