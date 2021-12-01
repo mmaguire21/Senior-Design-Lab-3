@@ -21,7 +21,7 @@ export default class IndexPage extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label>
+        <Layout>
           Username:
           <input
             type="text"
@@ -29,8 +29,8 @@ export default class IndexPage extends React.Component {
             value={this.state.Username}
             onChange={this.handleInputChange}
           />
-        </label>
-        <label>
+        </Layout>
+        <Layout>
           Password:
           <input
             type="text"
@@ -38,7 +38,7 @@ export default class IndexPage extends React.Component {
             value={this.state.Password}
             onChange={this.handleInputChange}
           />
-        </label>
+        </Layout>
         <button type="submit">Submit</button>
       </form>
     )
