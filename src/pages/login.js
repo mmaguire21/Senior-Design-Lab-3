@@ -1,12 +1,8 @@
 import * as React from "react"
 import Layout from '../components/layout'
 
-const LoginPage = () => {
-  return (
-    <Layout pageTitle = "Admin Log in">
-      <p>Please sign in with your Admin Username and Password</p>
-    </Layout>
-  )
+export default class IndexPage extends React.Component {
+  render() {
+    return <div>Hello world!</div>
+  }
 }
-
-export default LoginPage
