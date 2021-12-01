@@ -7,6 +7,18 @@ export default class IndexPage extends React.Component {
     lastName: "",
   }
   render() {
-    return <div>Hello world!</div>
+    return (
+      <form>
+        <label>
+          First name
+          <input type="text" name="firstName" />
+        </label>
+        <label>
+          Last name
+          <input type="text" name="lastName" />
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+    )
   }
 }
