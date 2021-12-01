@@ -1,6 +1,17 @@
 import * as React from "react"
 import Layout from '../components/layout'
 
+const theme = {
+  blue: {
+      default: "#3f51b5",
+      hover: "#283593"
+  },
+  pink: {
+      default: "#c91751",
+      hover: "#ad1457"
+  }
+};
+
 export default class IndexPage extends React.Component {
   state = {
     Username: "",
@@ -29,8 +40,6 @@ export default class IndexPage extends React.Component {
             value={this.state.Username}
             onChange={this.handleInputChange}
           />
-        </Layout>
-        <Layout>
           Password:
           <input
             type="text"
