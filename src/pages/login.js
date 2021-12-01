@@ -65,6 +65,7 @@ export default class IndexPage extends React.Component {
     //Compares the user entered Username and Password Strings and if they are equal sends a welcome alert
     if (uadmin.localeCompare(this.state.Username)==0 && padmin.localeCompare(this.state.Password)==0) {
     //alert(`Welcome ${this.state.Username} ${this.state.Password}!`)
+    //Redirects to the admin home page
     window.location.replace("/admin/home")
     }
     //If they are not equal sends an Incorrect Login Alert
