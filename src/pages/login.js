@@ -3,19 +3,37 @@ import Layout from '../components/layout'
 
 export default class IndexPage extends React.Component {
   state = {
-    firstName: "",
-    lastName: "",
+    Username: "",
+    Password: "",
+  }
+  handleInputChange = event => {
+    const target = event.target
+    const value = target.value
+    const name = target.name
+    this.setState({
+      [name]: value,
+    })
   }
   render() {
     return (
       <form>
         <label>
-          First name
-          <input type="text" name="firstName" />
+          Username:
+          <input
+            type="text"
+            name="Username"
+            value={this.state.Username}
+            onChange={this.handleInputChange}
+          />
         </label>
         <label>
-          Last name
-          <input type="text" name="lastName" />
+          Password:
+          <input
+            type="text"
+            name="Password"
+            value={this.state.Password}
+            onChange={this.handleInputChange}
+          />
         </label>
         <button type="submit">Submit</button>
       </form>
