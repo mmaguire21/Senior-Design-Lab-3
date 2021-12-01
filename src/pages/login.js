@@ -20,6 +20,9 @@ const theme = {
 const Button = styled.button`
 background-color: ${(props) => theme[props.theme].default};
 color: white;
+position: absolute;
+top:110px;
+left:500px;
 padding: 5px 15px;
 border-radius: 5px;
 outline: 0;
@@ -84,7 +87,7 @@ export default class IndexPage extends React.Component {
             onChange={this.handleInputChange}
           />
           </p>
-          <p>Password:
+          <p>Password: 
           <input
             type="text"
             name="Password"
