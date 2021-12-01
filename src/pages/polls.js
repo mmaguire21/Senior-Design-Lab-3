@@ -5,8 +5,6 @@ import 'react-calendar/dist/Calendar.css';
 /*
 function MyApp() {
   const [value, onChange] = useState(new Date());
-
-
   return (
     <div>
       <Calendar
@@ -19,8 +17,8 @@ function MyApp() {
   );
   */
 
-
-class NameForm extends React.Component {
+export default class NameForm extends React.Component{
+  
   constructor(props) {
     super(props);
     this.state = {value: ''};
@@ -36,15 +34,21 @@ class NameForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <><form onSubmit={this.handleSubmit}>
         <label>
           Name/Email:
           <input type="text" value={this.state.value} onChange={this.handleChange} />        </label>
         <input type="submit" value="Submit" />
-      </form>
+      </form><Calendar>
+          onClick
+        
+        </Calendar></>
     );
   }
 }
+
+
+  
 
   
 
@@ -61,5 +65,3 @@ class NameForm extends React.Component {
   }
 }
 */
-
-export default NameForm 
