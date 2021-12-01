@@ -1,4 +1,46 @@
 import * as React from "react"
-export default function Login() {
-  return <div>Admin login page</div>
+import Layout from '../components/layout'
+
+export default class IndexPage extends React.Component {
+  state = {
+    Username: "",
+    Password: "",
+  }
+  handleInputChange = event => {
+    const target = event.target
+    const value = target.value
+    const name = target.name
+    this.setState({
+      [name]: value,
+    })
+  }
+  handleSubmit = event => {
+    event.preventDefault()
+    alert(`Welcome ${this.state.Username} ${this.state.Password}!`)
+  }
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <Layout>
+          Username:
+          <input
+            type="text"
+            name="Username"
+            value={this.state.Username}
+            onChange={this.handleInputChange}
+          />
+        </Layout>
+        <Layout>
+          Password:
+          <input
+            type="text"
+            name="Password"
+            value={this.state.Password}
+            onChange={this.handleInputChange}
+          />
+        </Layout>
+        <button type="submit">Submit</button>
+      </form>
+    )
+  }
 }
