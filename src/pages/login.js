@@ -3,8 +3,8 @@ import Layout from '../components/layout'
 import styled from "styled-components";
 
 //Hard Coded Admin Username and Password
-var uadmin = "Matthieu";
-var padmin = "Stogsdill";
+var uadmin = "Broken";
+var padmin = "123";
 
 const theme = {
   blue: {
