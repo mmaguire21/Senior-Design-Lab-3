@@ -49,7 +49,7 @@ function publish() {
 }
 
 const RenderList = props => {
-    const animals = ["Dog", "Bird", "Cat", "Mouse", "Horse"];
+    const animals = ["Poll 1", "Poll 2", "Poll 3", "Poll 4", "Poll 5", "Poll 6"];
 
     return (
         <ul>
