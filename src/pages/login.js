@@ -1,17 +1,6 @@
 import * as React from "react"
 import Layout from '../components/layout'
 
-const theme = {
-  blue: {
-      default: "#3f51b5",
-      hover: "#283593"
-  },
-  pink: {
-      default: "#c91751",
-      hover: "#ad1457"
-  }
-};
-
 export default class IndexPage extends React.Component {
   state = {
     Username: "",
@@ -33,20 +22,22 @@ export default class IndexPage extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <Layout>
-          Username:
+          <p>Username:
           <input
             type="text"
             name="Username"
             value={this.state.Username}
             onChange={this.handleInputChange}
           />
-          Password:
+          </p>
+          <p>Password:
           <input
             type="text"
             name="Password"
             value={this.state.Password}
             onChange={this.handleInputChange}
           />
+          </p>
         </Layout>
         <button type="submit">Submit</button>
       </form>
