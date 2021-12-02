@@ -21,7 +21,8 @@ export default class Create extends React.Component {
     restrictNumParticipants: false,
     deadline: new Date(),
     invite: [],
-    invitees: []
+    invitees: [],
+    isPublished: false,
   }
   handleInputChange = event => {
     const target = event.target
@@ -111,7 +112,6 @@ export default class Create extends React.Component {
   }
   handleInviteSubmit = event => {
     event.preventDefault()
-    alert(`${this.state.invite}`)
     var prev_arr = this.state.invitees
     prev_arr.push(this.state.invite)
 
@@ -119,64 +119,66 @@ export default class Create extends React.Component {
       invitees: prev_arr
     })
   }
-  // handlePublish = event =>
-  // handleSave = event =>
+  handlePublish = event => {
+    event.preventDefault()
+    this.setState({
+      isPublished: true,
+    })
+    alert(`Title: ${this.state.title}\n Location: ${this.state.location}\n Notes and Comments: ${this.state.notesComments}\n timeZone: ${this.state.timeZone}\n startDate: ${this.state.startDate}\n startTime: ${this.state.startTime}\n endTime: ${this.state.endTime}\n numBlocks: ${this.state.numBlocks}\n sessionTime: ${this.state.sessionTime}\n restrictSlots: ${this.state.restrictSlots}\n restrictNumParticipants: ${this.state.restrictNumParticipants}\n deadline: ${this.state.deadline}\n invite: ${this.state.invite}\n invitees: ${this.state.invitees}\n isPublished: ${true}\n `)
+  }
+  handleSave = event => {
+    event.preventDefault()
+    alert(`Title: ${this.state.title}\n Location: ${this.state.location}\n Notes and Comments: ${this.state.notesComments}\n timeZone: ${this.state.timeZone}\n startDate: ${this.state.startDate}\n startTime: ${this.state.startTime}\n endTime: ${this.state.endTime}\n numBlocks: ${this.state.numBlocks}\n sessionTime: ${this.state.sessionTime}\n restrictSlots: ${this.state.restrictSlots}\n restrictNumParticipants: ${this.state.restrictNumParticipants}\n deadline: ${this.state.deadline}\n invite: ${this.state.invite}\n invitees: ${this.state.invitees}\n isPublished: ${this.state.isPublished}\n `)
+  }
   // handleCancel = event =>
-
-
-  
-
-
-
 
 
 
   render() {
     return (
         <div>
-        <form onSubmit={this.handleSubmit}>
-            <label>
-            Title
-            <input
-                type="text"
-                name="title"
-                value={this.state.title}
-                onChange={this.handleInputChange}
-            />
-            </label>
-            <label>
-            Location
-            <input
-                type="text"
-                name="location"
-                value={this.state.location}
-                onChange={this.handleInputChange}
-            />
-            </label>
-            <label>
-            Notes and Comments
-            <input
-                type="text"
-                name="notesComments"
-                value={this.state.notesComments}
-                onChange={this.handleInputChange}
-            />
-            </label>
-            <label>
-            Select your Time Zone:
-            <select name="timeZone" timeZone={this.state.timeZone} onChange={this.handleInputChange}>   
-                <option timeZone="none">Select Time Zone</option>         
-                <option timeZone="EST">Eastern Standard Time</option>
-                <option timeZone="CST">Central Standard Time</option>
-                <option timeZone="MST">Mountain Standard Time</option>
-                <option timeZone="PST">Pacific Standard Time</option>
-                <option timeZone="AST">Alaska Standard Time</option>
-                <option timeZone="HAST">Hawaii-Aleutian Standard Time</option>
-            </select>
-            </label>
+        
+        <label>
+        Title
+        <input
+            type="text"
+            name="title"
+            value={this.state.title}
+            onChange={this.handleInputChange}
+        />
+        </label>
+        <label>
+        Location
+        <input
+            type="text"
+            name="location"
+            value={this.state.location}
+            onChange={this.handleInputChange}
+        />
+        </label>
+        <label>
+        Notes and Comments
+        <input
+            type="text"
+            name="notesComments"
+            value={this.state.notesComments}
+            onChange={this.handleInputChange}
+        />
+        </label>
+        <label>
+        Select your Time Zone:
+        <select name="timeZone" timeZone={this.state.timeZone} onChange={this.handleInputChange}>   
+            <option timeZone="none">Select Time Zone</option>         
+            <option timeZone="EST">Eastern Standard Time</option>
+            <option timeZone="CST">Central Standard Time</option>
+            <option timeZone="MST">Mountain Standard Time</option>
+            <option timeZone="PST">Pacific Standard Time</option>
+            <option timeZone="AST">Alaska Standard Time</option>
+            <option timeZone="HAST">Hawaii-Aleutian Standard Time</option>
+        </select>
+        </label>
             
-            <button type="submit">Submit</button>
-        </form>
+            
         <br/>
         <br/>
         <Calendar 
@@ -457,9 +459,13 @@ export default class Create extends React.Component {
         <DateTime 
           onChange={this.handleDeadlineChange}
         />
-
-        <button type="submit">Publish</button>
-        <button type="submit">Save</button>
+        <form onSubmit={this.handlePublish}>
+          <button type="submit">Publish</button>
+        </form>
+        <form onSubmit={this.handleSave}>
+          <button type="submit">Save</button>
+        </form>
+        
         <button type="submit">Cancel</button>
 
       </div>
@@ -488,7 +494,7 @@ class CalendarComponent extends React.Component {
                 <li>
                     <nav>
                         {poll}
-                        <text> email</text>
+                        <text> </text>
                         
                     </nav>
                 </li>
