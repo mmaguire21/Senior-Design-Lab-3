@@ -49,14 +49,14 @@ function publish() {
 }
 
 const RenderList = props => {
-    const animals = ["Poll 1", "Poll 2", "Poll 3", "Poll 4", "Poll 5", "Poll 6"];
+    const polls = ["Poll 1", "Poll 2", "Poll 3", "Poll 4", "Poll 5", "Poll 6"];
 
     return (
         <ul>
-            {animals.map(animal => (
+            {polls.map(poll => (
                 <li>
                     <nav>
-                        {animal}
+                        {poll}
                         <text> </text>
                         <Link to="/admin/modify">
                             <button>(modify)</button>
