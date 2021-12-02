@@ -3,7 +3,6 @@ import Layout from "../../components/layout";
 import styled from "styled-components";
 import { Link } from 'gatsby'
 
-
 const theme = {
     blue: {
         default: "#3f51b5",
@@ -41,7 +40,7 @@ Button.defaultProps = {
 };
 
 function remind() {
-    alert("Members of the poll have been reminded");
+    alert("Members of the poll have been reminded")
 }
 
 function publish() {
@@ -49,7 +48,7 @@ function publish() {
 }
 
 const RenderList = props => {
-    const polls = ["Poll 1", "Poll 2", "Poll 3", "Poll 4", "Poll 5", "Poll 6"];
+    let polls = ["Poll 1", "Poll 2", "Poll 3", "Poll 4", "Poll 5", "Poll 6"];
 
     return (
         <ul>
