@@ -21,7 +21,8 @@ export default class Create extends React.Component {
     restrictNumParticipants: false,
     deadline: new Date(),
     invite: [],
-    invitees: []
+    invitees: [],
+    isPublished: false,
   }
   handleInputChange = event => {
     const target = event.target
@@ -111,7 +112,6 @@ export default class Create extends React.Component {
   }
   handleInviteSubmit = event => {
     event.preventDefault()
-    alert(`${this.state.invite}`)
     var prev_arr = this.state.invitees
     prev_arr.push(this.state.invite)
 
@@ -119,15 +119,18 @@ export default class Create extends React.Component {
       invitees: prev_arr
     })
   }
-  // handlePublish = event =>
-  // handleSave = event =>
+  handlePublish = event => {
+    event.preventDefault()
+    this.setState({
+      isPublished: true,
+    })
+    alert(`Title: ${this.state.title}\n Location: ${this.state.location}\n Notes and Comments: ${this.state.notesComments}\n timeZone: ${this.state.timeZone}\n startDate: ${this.state.startDate}\n startTime: ${this.state.startTime}\n endTime: ${this.state.endTime}\n numBlocks: ${this.state.numBlocks}\n sessionTime: ${this.state.sessionTime}\n restrictSlots: ${this.state.restrictSlots}\n restrictNumParticipants: ${this.state.restrictNumParticipants}\n deadline: ${this.state.deadline}\n invite: ${this.state.invite}\n invitees: ${this.state.invitees}\n isPublished: ${true}\n `)
+  }
+  handleSave = event => {
+    event.preventDefault()
+    alert(`Title: ${this.state.title}\n Location: ${this.state.location}\n Notes and Comments: ${this.state.notesComments}\n timeZone: ${this.state.timeZone}\n startDate: ${this.state.startDate}\n startTime: ${this.state.startTime}\n endTime: ${this.state.endTime}\n numBlocks: ${this.state.numBlocks}\n sessionTime: ${this.state.sessionTime}\n restrictSlots: ${this.state.restrictSlots}\n restrictNumParticipants: ${this.state.restrictNumParticipants}\n deadline: ${this.state.deadline}\n invite: ${this.state.invite}\n invitees: ${this.state.invitees}\n isPublished: ${this.state.isPublished}\n `)
+  }
   // handleCancel = event =>
-
-
-  
-
-
-
 
 
 
@@ -457,9 +460,13 @@ export default class Create extends React.Component {
         <DateTime 
           onChange={this.handleDeadlineChange}
         />
-
-        <button type="submit">Publish</button>
-        <button type="submit">Save</button>
+        <form onSubmit={this.handlePublish}>
+          <button type="submit">Publish</button>
+        </form>
+        <form onSubmit={this.handleSave}>
+          <button type="submit">Save</button>
+        </form>
+        
         <button type="submit">Cancel</button>
 
       </div>
@@ -488,7 +495,7 @@ class CalendarComponent extends React.Component {
                 <li>
                     <nav>
                         {poll}
-                        <text> email</text>
+                        <text> </text>
                         
                     </nav>
                 </li>
