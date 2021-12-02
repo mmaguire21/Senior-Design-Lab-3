@@ -22,16 +22,16 @@ export default class NameForm extends React.Component{
     return (
       <>
       <Layout pageTitle= "Poll Details">
-      
         </Layout>
+        <Calendar>
+          onClick
+        </Calendar>
       <form onSubmit={this.handleSubmit}>
         <label>
           Name/Email:
           <input type="text" value={this.state.value} onChange={this.handleChange} />        </label>
         <input type="submit" value="Submit" />
-      </form><Calendar>
-          onClick
-        </Calendar>
+      </form>
         </>
     );
   }
