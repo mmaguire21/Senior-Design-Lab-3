@@ -137,49 +137,48 @@ export default class Create extends React.Component {
   render() {
     return (
         <div>
-        <form onSubmit={this.handleSubmit}>
-            <label>
-            Title
-            <input
-                type="text"
-                name="title"
-                value={this.state.title}
-                onChange={this.handleInputChange}
-            />
-            </label>
-            <label>
-            Location
-            <input
-                type="text"
-                name="location"
-                value={this.state.location}
-                onChange={this.handleInputChange}
-            />
-            </label>
-            <label>
-            Notes and Comments
-            <input
-                type="text"
-                name="notesComments"
-                value={this.state.notesComments}
-                onChange={this.handleInputChange}
-            />
-            </label>
-            <label>
-            Select your Time Zone:
-            <select name="timeZone" timeZone={this.state.timeZone} onChange={this.handleInputChange}>   
-                <option timeZone="none">Select Time Zone</option>         
-                <option timeZone="EST">Eastern Standard Time</option>
-                <option timeZone="CST">Central Standard Time</option>
-                <option timeZone="MST">Mountain Standard Time</option>
-                <option timeZone="PST">Pacific Standard Time</option>
-                <option timeZone="AST">Alaska Standard Time</option>
-                <option timeZone="HAST">Hawaii-Aleutian Standard Time</option>
-            </select>
-            </label>
+        
+        <label>
+        Title
+        <input
+            type="text"
+            name="title"
+            value={this.state.title}
+            onChange={this.handleInputChange}
+        />
+        </label>
+        <label>
+        Location
+        <input
+            type="text"
+            name="location"
+            value={this.state.location}
+            onChange={this.handleInputChange}
+        />
+        </label>
+        <label>
+        Notes and Comments
+        <input
+            type="text"
+            name="notesComments"
+            value={this.state.notesComments}
+            onChange={this.handleInputChange}
+        />
+        </label>
+        <label>
+        Select your Time Zone:
+        <select name="timeZone" timeZone={this.state.timeZone} onChange={this.handleInputChange}>   
+            <option timeZone="none">Select Time Zone</option>         
+            <option timeZone="EST">Eastern Standard Time</option>
+            <option timeZone="CST">Central Standard Time</option>
+            <option timeZone="MST">Mountain Standard Time</option>
+            <option timeZone="PST">Pacific Standard Time</option>
+            <option timeZone="AST">Alaska Standard Time</option>
+            <option timeZone="HAST">Hawaii-Aleutian Standard Time</option>
+        </select>
+        </label>
             
-            <button type="submit">Submit</button>
-        </form>
+            
         <br/>
         <br/>
         <Calendar 
