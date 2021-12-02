@@ -1,0 +1,37 @@
+{
+  "name": "lab-3",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lab 3 ",
+  "author": "<mmaguire21>",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "@auth0/auth0-react": "^1.8.0",
+    "fs": "^0.0.1-security",
+    "gatsby": "^4.1.0",
+    "gatsby-cli": "^4.2.0",
+    "gatsby-plugin-image": "^2.2.0",
+    "gatsby-plugin-sharp": "^4.2.0",
+    "gatsby-source-filesystem": "^4.2.0",
+    "gatsby-source-firestore": "^1.0.3",
+    "gatsby-transformer-sharp": "^4.1.0",
+    "moment": "^2.29.1",
+    "react": "^17.0.1",
+    "react-calendar": "^3.5.0",
+    "react-cool-text": "^1.0.19",
+    "react-datetime": "^3.1.1",
+    "react-datetime-picker": "^3.4.3",
+    "react-day-picker": "^7.4.10",
+    "react-dom": "^17.0.1",
+    "styled-components": "^5.3.3"
+  }
+}
