@@ -19,6 +19,9 @@ export default class Create extends React.Component {
     sessionTime: "", 
     restrictSlots: false,
     restrictNumParticipants: false,
+    deadline: new Date(),
+    invite: [],
+    invitees: []
   }
   handleInputChange = event => {
     const target = event.target
@@ -26,6 +29,11 @@ export default class Create extends React.Component {
     const name = target.name
     this.setState({
       [name]: value,
+    })
+  }
+  handleDeadlineChange = event => {
+    this.setState({
+      deadline: event.toDate(),
     })
   }
   handleRestrictSlots = event => {
@@ -98,8 +106,31 @@ export default class Create extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault()
+    alert(`deadline: ${this.state.deadline}`)
     alert(`Title: ${this.state.title} Location: ${this.state.location} Notes and Comments: ${this.state.notesComments} startTime: ${this.state.restrictNumParticipants}!`)
   }
+  handleInviteSubmit = event => {
+    event.preventDefault()
+    alert(`${this.state.invite}`)
+    var prev_arr = this.state.invitees
+    prev_arr.push(this.state.invite)
+
+    this.setState({
+      invitees: prev_arr
+    })
+  }
+  // handlePublish = event =>
+  // handleSave = event =>
+  // handleCancel = event =>
+
+
+  
+
+
+
+
+
+
   render() {
     return (
         <div>
@@ -396,13 +427,41 @@ export default class Create extends React.Component {
             </label>
                 
         <br/>
+        <RenderList emailList={this.state.invitees}/>
 
         <br/>
-        <Invite />
         <label>
+          <br/>
+          <h4>
+            Invite
+          </h4>
+          <form onSubmit={this.handleInviteSubmit}>
+            <label>
+            <input
+                type="text"
+                name="invite"
+                value={this.state.invite}
+                onChange={this.handleInputChange}
+            />
+            </label>
+            <button type="submit">Add Invite</button>
+          </form>
+
+         
+
+          <br/>
+          <br/>
           Deadline:
         </label>
-        <DateTime />
+
+        <DateTime 
+          onChange={this.handleDeadlineChange}
+        />
+
+        <button type="submit">Publish</button>
+        <button type="submit">Save</button>
+        <button type="submit">Cancel</button>
+
       </div>
     )
   }
@@ -420,11 +479,20 @@ class CalendarComponent extends React.Component {
     }
   }
 
-//Step 3 
-class Invite extends React.Component {
-    render(){
-        return(
-            <div>Show invite and publish options</div>
-        )
-    }
-}
+
+  function RenderList({emailList}){
+    
+    return (
+        <ul>
+            {emailList.map(poll => (
+                <li>
+                    <nav>
+                        {poll}
+                        <text> email</text>
+                        
+                    </nav>
+                </li>
+            ))}
+        </ul>
+    );
+};
