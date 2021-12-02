@@ -6,25 +6,30 @@ import Layout from '../components/layout'
 export default class NameForm extends React.Component{
   
 
+
   constructor(props) {
     super(props);
     this.state = {value: ''};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
 
-  handleChange(event) {    this.setState({value: event.target.value});  }
+  }
+  
+  
+
+  handleChange(event) { this.setState({value: event.target.value});  }
   handleSubmit(event) {
     alert(this.state.value + ' has successfully signed up for the poll at selected time' );
     event.preventDefault();
   }
 
-  handleCalendarChange(event) {
-    const name = "start"
+  handleCalendarChange = event => {
+    const name = "startDate"
     this.setState({
-      [name]: event
+      [name]: event,
     })
   }
+
 
   render() {
     return (
@@ -32,7 +37,8 @@ export default class NameForm extends React.Component{
       <Layout pageTitle= "Poll Details">
         </Layout>
         <Calendar>
-          onClick = {this.handleCalendarChange}
+          onChange= {this.handleCalendarChange}
+          onClickDay={this.state}
         </Calendar>
       <form onSubmit={this.handleSubmit}>
         <label>
@@ -44,28 +50,4 @@ export default class NameForm extends React.Component{
     );
   }
 }
-
-/*
-const sendgrid = require("@sendgrid/mail");
-sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
-
-function sendEmail(from, to, subject, body) {
-  sendgrid
-    .send({ from, to, subject, text: body })
-    .then(() => {
-      console.log(`Email sent from ${from} to ${to}`);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
-
-sendEmail(
-  process.env.FROM_EMAIL,
-  process.env.TO_EMAIL,
-  "Email notification!",
-  "This is an email notification!"
-);
-
-  */
 
