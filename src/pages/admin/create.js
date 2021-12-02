@@ -5,7 +5,77 @@ import 'react-calendar/dist/Calendar.css';
 import "react-datetime/css/react-datetime.css";
 
 
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs, addDoc, getDoc } from 'firebase/firestore/lite';
+import { doc, setDoc } from "firebase/firestore"; 
+
+
+
+
+
+// Follow this pattern to import other Firebase services
+// import { } from 'firebase/<service>';
+
+// TODO: Replace the following with your app's Firebase project configuration
+const firebaseConfig = {
+
+  apiKey: "AIzaSyBqaR9GxYcVJ3CS-hkEL8rOPOkjNwCkkec",
+
+  authDomain: "senior-design-lab-3-d6e2e.firebaseapp.com",
+
+  databaseURL: "https://senior-design-lab-3-d6e2e-default-rtdb.firebaseio.com",
+
+  projectId: "senior-design-lab-3-d6e2e",
+
+  storageBucket: "senior-design-lab-3-d6e2e.appspot.com",
+
+  messagingSenderId: "553614215112",
+
+  appId: "1:553614215112:web:02bb2b356f8c05720322fd",
+
+  measurementId: "G-4JNWPN5MW8"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Get a list of cities from your database
+async function getCities(db) {
+  const citiesCol = collection(db, 'Polls');
+  const citySnapshot = await getDocs(citiesCol);
+  const cityList = citySnapshot.docs.map(doc => doc.data());
+  return cityList;
+}
+ 
+async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTime, numBlocks, sesh, restrictS, restrictP, deadline, invite, invitees, isPublished) {
+  const docRef = await addDoc(collection(db, "Polls"), {
+    title: title,
+    location: loc,
+    notesComments: notes,
+    timeZone: zone,
+    startDate: startDate,
+    startTime: startTime,
+    endTime: endTime,
+    numBlocks: numBlocks,
+    sessionTime: sesh, 
+    restrictSlots: restrictS,
+    restrictNumParticipants: restrictP,
+    deadline: deadline,
+    invite: invite,
+    invitees: invitees,
+    isPublished: isPublished,
+  });
+}
+
+getCities(db).then((response) => console.log(response[0].title));
+
+
+
+
 export default class Create extends React.Component {
+  // 
+
   range = true;
 
   state = {
@@ -125,6 +195,7 @@ export default class Create extends React.Component {
     this.setState({
       isPublished: true,
     })
+    savePoll(db, this.state.title, this.state.location, this.state.notesComments, this.state.timeZone, this.state.startDate, this.state.startTime, this.state.endTime, this.state.numBlocks, this.state.sessionTime, this.state.restrictSlots, this.state.restrictNumParticipants, this.state.deadline, this.state.invite, this.state.invitees, true )
     alert(`Title: ${this.state.title}\n Location: ${this.state.location}\n Notes and Comments: ${this.state.notesComments}\n timeZone: ${this.state.timeZone}\n startDate: ${this.state.startDate}\n startTime: ${this.state.startTime}\n endTime: ${this.state.endTime}\n numBlocks: ${this.state.numBlocks}\n sessionTime: ${this.state.sessionTime}\n restrictSlots: ${this.state.restrictSlots}\n restrictNumParticipants: ${this.state.restrictNumParticipants}\n deadline: ${this.state.deadline}\n invite: ${this.state.invite}\n invitees: ${this.state.invitees}\n isPublished: ${true}\n `)
   }
   handleSave = event => {
