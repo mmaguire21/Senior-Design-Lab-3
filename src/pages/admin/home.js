@@ -1,5 +1,5 @@
 import * as React from "react"
-import Layout from "../../components/layout";
+import Layout from "../../components/layout_home";
 import styled from "styled-components";
 import { Link } from 'gatsby'
 
@@ -48,7 +48,12 @@ function publish() {
 }
 
 const RenderList = props => {
-    let polls = ["Poll 1", "Poll 2", "Poll 3", "Poll 4", "Poll 5", "Poll 6"];
+
+    if (2 > 1) {
+
+    }
+
+    let polls = ["Poll 1", "Poll 2", "Poll 3", "Poll 4", "Poll 5", "Poll 6", "Poll 7"];
 
     return (
         <ul>

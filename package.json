@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.8.0",
+    "fs": "^0.0.1-security",
     "gatsby": "^4.1.0",
     "gatsby-cli": "^4.2.0",
     "gatsby-plugin-image": "^2.2.0",
