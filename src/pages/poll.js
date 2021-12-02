@@ -5,6 +5,7 @@ import Layout from '../components/layout'
 
 export default class NameForm extends React.Component{
   
+
   constructor(props) {
     super(props);
     this.state = {value: ''};
@@ -14,8 +15,15 @@ export default class NameForm extends React.Component{
 
   handleChange(event) {    this.setState({value: event.target.value});  }
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
+    alert(this.state.value + ' has successfully signed up for the poll at selected time' );
     event.preventDefault();
+  }
+
+  handleCalendarChange(event) {
+    const name = "start"
+    this.setState({
+      [name]: event
+    })
   }
 
   render() {
@@ -24,12 +32,12 @@ export default class NameForm extends React.Component{
       <Layout pageTitle= "Poll Details">
         </Layout>
         <Calendar>
-          onClick
+          onClick = {this.handleCalendarChange}
         </Calendar>
       <form onSubmit={this.handleSubmit}>
         <label>
           Name/Email:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />        </label>
+          <input type="text" value={this.state.value} onChange={this.handleChange} />   </label>
         <input type="submit" value="Submit" />
       </form>
         </>
@@ -37,19 +45,27 @@ export default class NameForm extends React.Component{
   }
 }
 
+/*
+const sendgrid = require("@sendgrid/mail");
+sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-  
-
-/*const IndexPage = () => {
-  return (
-    <Layout pageTitle="Create a New Poll">
-      <p>This is where we will put the poll details!
-
-      </p>
-    </Layout>
-    
-  )
+function sendEmail(from, to, subject, body) {
+  sendgrid
+    .send({ from, to, subject, text: body })
+    .then(() => {
+      console.log(`Email sent from ${from} to ${to}`);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }
 
-export default IndexPage
-*/
+sendEmail(
+  process.env.FROM_EMAIL,
+  process.env.TO_EMAIL,
+  "Email notification!",
+  "This is an email notification!"
+);
+
+  */
+
