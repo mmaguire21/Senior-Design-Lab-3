@@ -45,7 +45,7 @@ export default class NameForm extends React.Component{
   }
 }
 
-
+/*
 const sendgrid = require("@sendgrid/mail");
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -67,5 +67,5 @@ sendEmail(
   "This is an email notification!"
 );
 
-  
+  */
 
