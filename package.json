@@ -22,9 +22,12 @@
     "gatsby-plugin-sharp": "^4.2.0",
     "gatsby-source-filesystem": "^4.2.0",
     "gatsby-transformer-sharp": "^4.1.0",
+    "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-calendar": "^3.5.0",
     "react-cool-text": "^1.0.19",
+    "react-datetime": "^3.1.1",
+    "react-datetime-picker": "^3.4.3",
     "react-dom": "^17.0.1",
     "styled-components": "^5.3.3"
   }

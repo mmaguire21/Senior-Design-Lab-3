@@ -1,6 +1,8 @@
 import React from "react"
 import Calendar from "react-calendar"
+import DateTime from 'react-datetime'
 import 'react-calendar/dist/Calendar.css';
+import "react-datetime/css/react-datetime.css";
 
 export default class Create extends React.Component {
   range = true;
@@ -397,6 +399,10 @@ export default class Create extends React.Component {
 
         <br/>
         <Invite />
+        <label>
+          Deadline:
+        </label>
+        <DateTime />
       </div>
     )
   }
