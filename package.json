@@ -22,6 +22,7 @@
     "gatsby-plugin-image": "^2.2.0",
     "gatsby-plugin-sharp": "^4.2.0",
     "gatsby-source-filesystem": "^4.2.0",
+    "gatsby-source-firestore": "^1.0.3",
     "gatsby-transformer-sharp": "^4.1.0",
     "moment": "^2.29.1",
     "react": "^17.0.1",
