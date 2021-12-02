@@ -5,6 +5,7 @@ import Layout from '../components/layout'
 
 export default class NameForm extends React.Component{
   
+
   constructor(props) {
     super(props);
     this.state = {value: ''};
@@ -18,13 +19,20 @@ export default class NameForm extends React.Component{
     event.preventDefault();
   }
 
+  handleCalendarChange(event) {
+    const name = "start"
+    this.setState({
+      [name]: event
+    })
+  }
+
   render() {
     return (
       <>
       <Layout pageTitle= "Poll Details">
         </Layout>
         <Calendar>
-          onClick
+          onClick = {this.handleCalendarChange}
         </Calendar>
       <form onSubmit={this.handleSubmit}>
         <label>

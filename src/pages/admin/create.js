@@ -1,21 +1,24 @@
 import React from "react"
 import Calendar from "react-calendar"
+import DateTime from 'react-datetime'
 import 'react-calendar/dist/Calendar.css';
+import "react-datetime/css/react-datetime.css";
 
 export default class Create extends React.Component {
   range = true;
+
   state = {
     title: "",
     location: "",
     notesComments: "",
     timeZone: "None",
     startDate: "",
-    startTime: "12:00am",
-    endTime: "12:15am",
+    startTime: "0",
+    endTime: "0",
     numBlocks: "",
     sessionTime: "", 
-    restrictSlots: "",
-    restrictNumParticipants: "",
+    restrictSlots: false,
+    restrictNumParticipants: false,
   }
   handleInputChange = event => {
     const target = event.target
@@ -24,6 +27,60 @@ export default class Create extends React.Component {
     this.setState({
       [name]: value,
     })
+  }
+  handleRestrictSlots = event => {
+    const target = event.target
+    const value = target.value
+    const name = target.name
+    const prev = this.state.restrictSlots
+    this.setState({
+      [name]: !prev,
+    })
+  }
+  handleRestrictParticipants = event => {
+    const target = event.target
+    const value = target.value
+    const name = target.name
+    const prev = this.state.restrictNumParticipants
+    this.setState({
+      [name]: !prev,
+    })
+  }
+  handleBlocksInputChange = event => {
+    const difference = this.state.endTime - this.state.startTime
+
+    const target = event.target
+    const value = target.value
+    const name = target.name
+    if(name == "numBlocks"){
+      const sessionsLength = difference / value
+      if(sessionsLength < 5){
+        alert(`The length of sessions must be 5 minutes or longer`)
+      }
+      else{
+        this.setState({
+          sessionTime: sessionsLength,
+        })
+        this.setState({
+          [name]: value,
+        })
+      }
+    }
+    if(name == "sessionTime"){
+      const calculatedNumBlocks = difference / value
+      if(calculatedNumBlocks < 1){
+        alert(`There must be at least one block`)
+      }
+      else{
+        this.setState({
+          numBlocks: Math.floor(calculatedNumBlocks),
+        })
+        this.setState({
+          [name]: value,
+        })
+      } 
+    }
+  
   }
   handleStartOrEndTimeChange = event => {
     const index = event.target.selectedIndex
@@ -38,29 +95,10 @@ export default class Create extends React.Component {
       [name]: event,
     })
   }
-  handleCalculate = event => {
-    event.preventDefault()
-    const difference = this.state.endTime - this.state.startTime
 
-    if(difference < 0){
-        alert(`Please ensure your start time is before your end time!`)
-    }
-    else{
-        if(this.state.sessionTime == ""){
-            const sessionsLength = difference / this.state.numBlocks
-            alert(`Length of sessions: ${sessionsLength}`)
-        }
-        else if(this.state.numBlocks == ""){
-            const blockNum = difference / this.state.sessionTime
-            alert(`Number of blocks: ${blockNum}`)
-        }
-
-        // alert(`Number of Blocks: ${this.state.numBlocks} Length of Session: ${this.state.sessionTime} Start Time: ${this.state.startTime} End Time: ${this.state.endTime} Difference: ${difference}`)
-    }
-  }
   handleSubmit = event => {
     event.preventDefault()
-    alert(`Title: ${this.state.title} Location: ${this.state.location} Notes and Comments: ${this.state.notesComments} startTime: ${this.state.timeZone}!`)
+    alert(`Title: ${this.state.title} Location: ${this.state.location} Notes and Comments: ${this.state.notesComments} startTime: ${this.state.restrictNumParticipants}!`)
   }
   render() {
     return (
@@ -317,31 +355,54 @@ export default class Create extends React.Component {
             </select>
             </label>
 
-            <form onSubmit={this.handleCalculate}>
-                <label>
-                Number of Blocks
-                <input
-                    type="text"
-                    name="numBlocks"
-                    value={this.state.numBlocks}
-                    onChange={this.handleInputChange}
-                />
-                </label>
-                <label>
-                Length of Session
-                <input
-                    type="text"
-                    name="sessionTime"
-                    value={this.state.sessionTime}
-                    onChange={this.handleInputChange}
-                />
-                </label>
-                <button type="submit">Calculate</button>
-            </form>
+            
+            <label>
+            Number of Blocks
+            <input
+                type="text"
+                name="numBlocks"
+                value={this.state.numBlocks}
+                onChange={this.handleBlocksInputChange}
+            />
+            </label>
+            <label>
+            Length of Session
+            <input
+                type="text"
+                name="sessionTime"
+                value={this.state.sessionTime}
+                onChange={this.handleBlocksInputChange}
+            />
+            </label>
+            {/* restrict votes per slot */}
+            <label>
+              <input
+                type="checkbox"
+                name="restrictSlots"
+                checked={this.state.restrictSlots}
+                onChange={this.handleRestrictSlots}
+              />
+              Restrict votes per slot 
+            </label>
+            {/* restrict votes per participant */}
+            <label>
+              <input
+                type="checkbox"
+                name="restrictNumParticipants"
+                checked={this.state.restrictNumParticipants}
+                onChange={this.handleRestrictParticipants}
+              />
+              Restrict votes per participant
+            </label>
+                
         <br/>
 
         <br/>
         <Invite />
+        <label>
+          Deadline:
+        </label>
+        <DateTime />
       </div>
     )
   }
