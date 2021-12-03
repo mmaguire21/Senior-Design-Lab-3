@@ -24,7 +24,12 @@ const db = getFirestore(app);
 
 var data;
 var length;
-let urlID = window.location.search.substring(1);
+
+//let urlID = window.location.search.substring(1);
+
+var urlID = this;
+urlID.data.url = window.location.search.substring(1);
+urlID.server.update();
 
 // Get a list of cities from your database
 async function getCities(db) {
@@ -70,6 +75,8 @@ let startTime;
 let timeSlots;
 let timeZone;
 let title;
+
+let slotVote = false;
 
 function RenderList({variable}) {
     let i = 0;
@@ -120,7 +127,10 @@ function RenderList({variable}) {
 
 }
 
-
+function handleVote() {
+    slotVote = !slotVote;
+    console.log(slotVote)
+}
 
 
 RenderDocs();
@@ -129,6 +139,7 @@ export default class NameForm extends React.Component {
     state = {
         variable: [],
         slots: [],
+        slotVote: "",
     }
 
     constructor(props) {
@@ -218,18 +229,27 @@ export default class NameForm extends React.Component {
 }
 
 function RenderTimeSlots({slotList}){
-    console.log(typeof(slotList));
     if(typeof(slotList) == "undefined"){
-        slotList = ["TimeSlots: "];
+        slotList = [["TimeSlots: ", ""]];
     }
     return (
         <ul>
-          {slotList.map(slot => (
+          {slotList.map(slot => ( 
               <li>
                   <nav>
-                      {slot}
-                      <text> </text>
                       
+                      <text> </text>
+                      <label>
+                        <p>
+                            <input
+                                type="checkbox"
+                                name="slotVote"
+                                checked={slotVote}
+                                onChange={handleVote}
+                            />
+                            {slot[0]} - {slot[1]} 
+                        </p>
+                    </label>
                   </nav>
               </li>
           ))}
