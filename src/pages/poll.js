@@ -121,11 +121,14 @@ function RenderList({variable}) {
 }
 
 
+
+
 RenderDocs();
 
 export default class NameForm extends React.Component {
     state = {
         variable: [],
+        slots: [],
     }
 
     constructor(props) {
@@ -156,14 +159,29 @@ export default class NameForm extends React.Component {
         getData();
         console.log(polls);
         event.preventDefault()
+
+        //parse time slots
+        var slotArr = ["", ""];
+        var slotsArr = [];
+        var numSlots = data[2].timeSlots.length
+        for(var i = 0; i < numSlots; i++){
+          slotArr[0] = data[2].timeSlots[i].startTime;
+          slotArr[1] = data[2].timeSlots[i].endTime;
+          var arr = [slotArr[0], slotArr[1]]
+          slotsArr.push(arr);
+        }
+        console.log(slotsArr)
+        event.preventDefault()
+
         this.setState({
             variable: polls,
+            slots: slotsArr,
         })
     }
 
     render() {
         return (
-            <>
+            <div>
                 <Layout pageTitle="Poll Details">
                 </Layout>
 
@@ -188,11 +206,33 @@ export default class NameForm extends React.Component {
 
                 <RenderList variable={this.state.variable}/>
 
+                
+                <RenderTimeSlots slotList={this.state.slots}/>
+
                 <form onSubmit={this.renderListener}>
                     <button type="submit">Get Created Poll</button>
                 </form>
-            </>
-        );
+            </div>
+        )
     }
 }
 
+function RenderTimeSlots({slotList}){
+    console.log(typeof(slotList));
+    if(typeof(slotList) == "undefined"){
+        slotList = ["TimeSlots: "];
+    }
+    return (
+        <ul>
+          {slotList.map(slot => (
+              <li>
+                  <nav>
+                      {slot}
+                      <text> </text>
+                      
+                  </nav>
+              </li>
+          ))}
+      </ul>
+    );
+  };
