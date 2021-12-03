@@ -24,7 +24,12 @@ const db = getFirestore(app);
 
 var data;
 var length;
-let urlID = window.location.search.substring(1);
+
+//let urlID = window.location.search.substring(1);
+
+var urlID = this;
+urlID.data.url = window.location.search.substring(1);
+urlID.server.update();
 
 // Get a list of cities from your database
 async function getCities(db) {
