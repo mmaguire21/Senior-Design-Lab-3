@@ -31,6 +31,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+var data;
+var length;
+
 
 // Get a list of cities from your database
 async function getCities(db) {
@@ -41,28 +44,7 @@ async function getCities(db) {
   return citySnapshot;
 }
 
-async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTime, numBlocks, sesh, restrictS, restrictP, deadline, invite, invitees, isPublished) {
-  const docRef = await addDoc(collection(db, "Polls"), {
-    title: title,
-    location: loc,
-    notesComments: notes,
-    timeZone: zone,
-    startDate: startDate,
-    startTime: startTime,
-    endTime: endTime,
-    numBlocks: numBlocks,
-    sessionTime: sesh, 
-    restrictSlots: restrictS,
-    restrictNumParticipants: restrictP,
-    deadline: deadline,
-    invite: invite,
-    invitees: invitees,
-    isPublished: isPublished,
-  });
-}
 
-var data;
-var length;
 
 
 function RenderDocs(){
@@ -80,31 +62,27 @@ let polls = [];
 
 function getData(){
   polls[0] = data[1].title
-  polls[1] = data[1].location
+  polls[1] = data[2].location
   polls[2] = data[1].timeZone
   polls[3] = data[1].startDate
   polls[4] = data[1].startTime
   polls[5] = data[1].endTime
   polls[6] = data[1].notesComments
-  /*let i = 0;
+  /*
+  let i = 0;
     while (i < i) {
         polls[i] = data[i];
         i++;
     }
-  polls[0] = data[1].title
-  polls[1] = data[1].location
-  polls[2] = data[1].timeZone
-  polls[3] = data[1].startDate
-  polls[4] = data[1].startTime
-  polls[5] = data[1].endTime
-  polls[6] = data[1].notesComments*/
+    */
+  
 }
 
 function RenderList({variable}){
   let itemsToRender
   if(variable){
-    itemsToRender = variable.map(variable =>{
-      return <label>{variable.title}</label>
+    itemsToRender = variable.map(poll =>{
+      return <li>{poll.title}</li>
     })
   }
   return <div>{itemsToRender}</div>
