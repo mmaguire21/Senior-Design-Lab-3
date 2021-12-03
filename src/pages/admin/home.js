@@ -59,12 +59,8 @@ function remind() {
     alert("Members of the poll have been reminded")
 }
 
-function publish() {
-    alert("The poll has been published")
-}
-
-var data;
-var length;
+let data;
+let length;
 
 async function getPolls() {
     const pollCol = collection(db, 'Polls');
@@ -82,7 +78,7 @@ function RenderDocs(){
             id: doc.id,
             ...doc.data(),
         }));
-        console.log(data);
+        console.log(data[0].title);
 
     });
 }
@@ -97,7 +93,12 @@ function getData(){
 
 RenderDocs();
 
+
 function RenderList({titleList}){
+
+    function publish(id) {
+        alert("The poll has been published id: " + id)
+    }
 
     return (
         <ul>
@@ -110,13 +111,13 @@ function RenderList({titleList}){
                             <button>(modify)</button>
                         </Link>
                         <button onClick={remind}>(remind)</button>
-                        <button onClick={publish}>(publish)</button>
+                        <button onClick={() => publish(poll.id)}>(publish)</button>
                     </nav>
                 </li>
             ))}
         </ul>
     );
-};
+}
 
 export default class Home extends React.Component {
     state = {
@@ -133,21 +134,28 @@ export default class Home extends React.Component {
     }
 
     render() {
+
         return (
+
             <Layout pageTitle="Admin Home Page">
-            <Link to="/admin/create">
-            <Button>Create A Poll</Button>
-            </Link>
+                <div>
+                    <p>To get started, create a poll -->
+                        <Link to="/admin/create">
+                        <Button>Create A Poll</Button>
+                        </Link>
+                    </p>
+                </div>
+                <div>
+                    <p>These are your polls!</p>
 
-            <p>Create Modify or Publish Polls on this Page</p>
+                    <RenderList titleList={this.state.titleList}/>
 
-            <RenderList titleList={this.state.titleList}/>
+                    <Link to="/login">
+                    <Button>Logout</Button>
+                    </Link>
 
-            <Link to="/login">
-            <Button>Logout</Button>
-            </Link>
-
-            <Button onClick={this.renderListener}>Render</Button>
+                    <Button onClick={this.renderListener}>Load Polls</Button>
+                </div>
             </Layout>
         )
 }
