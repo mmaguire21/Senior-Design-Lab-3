@@ -5,6 +5,8 @@ import Layout from '../components/layout'
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, addDoc, getDoc } from 'firebase/firestore/lite';
 import { doc, setDoc } from "firebase/firestore";
+import styled from "styled-components";
+
 
 const firebaseConfig = {
 
@@ -34,7 +36,8 @@ const db = getFirestore(app);
 async function getCities(db) {
   const citiesCol = collection(db, 'Polls');
   const citySnapshot = await getDocs(citiesCol);
-  const cityList = citySnapshot.docs.map(doc => doc.data());
+  const idList = citySnapshot.docs.map(doc => doc.id);
+    length = idList.length;
   return citySnapshot;
 }
 
@@ -58,10 +61,9 @@ async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTi
   });
 }
 
-
-//getCities(db).then((response) => console.log(response[0].title));
-
 var data;
+var length;
+
 
 function RenderDocs(){
   getCities(db).then((snapshot) => {
@@ -70,20 +72,58 @@ function RenderDocs(){
       ...doc.data(),
     }));
     console.log(data); 
-
-    // [ { id: 'glMeZvPpTN1Ah31sKcnj', title: 'The Great Gatsby' } ]
   });
+}
+
+
+let polls = [];
+
+function getData(){
+  polls[0] = data[0]
+  polls[1] = data[1].title
+  /*let i = 0;
+    while (i < i) {
+        polls[i] = data[i];
+        i++;
+    }
+  polls[0] = data[1].title
+  polls[1] = data[1].location
+  polls[2] = data[1].timeZone
+  polls[3] = data[1].startDate
+  polls[4] = data[1].startTime
+  polls[5] = data[1].endTime
+  polls[6] = data[1].notesComments*/
+}
+
+function RenderList({variable}){
+  let itemsToRender
+  if(variable){
+    itemsToRender = variable.map(variable =>{
+      return <label>{variable.title}</label>
+    })
+  }
+  return <div>{itemsToRender}</div>
+  /*
+  return (
+      <ul>
+          {variable.map(poll => (
+              <li>
+                  {poll.title}
+              </li>
+        ))}
+      </ul>
+  );
+  */
 }
 
 
 RenderDocs(); 
 
-
-
-
-
 export default class NameForm extends React.Component{
-  
+    state = {
+    variable: [],
+  }
+
   constructor(props) {
     super(props);
     this.state = {value: ''};
@@ -94,7 +134,7 @@ export default class NameForm extends React.Component{
   
   handleChange(event) { this.setState({value: event.target.value});  }
   handleSubmit(event) {
-    alert(this.state.value + ' has successfully signed up for the poll at selected time' );
+    alert(this.state.value + ' has successfully signed up for the' + this.data.title + ' poll at selected time' );
     event.preventDefault();
   }
 
@@ -105,24 +145,39 @@ export default class NameForm extends React.Component{
     })
   }
   
+  renderListener = event => {
+    getData();
+    console.log(polls);
+    event.preventDefault()
+    this.setState({
+        variable: polls,
+    })
+  }
+
   render() {
     return (
       <>
-      
       <Layout pageTitle= "Poll Details">
         </Layout>
+
         <Calendar>
           onChange= {this.handleCalendarChange}
           onClickDay={this.state}
         </Calendar>
+
       <form onSubmit={this.handleSubmit}>
         <label>
-          Name/Email:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />   </label>
+          Email:
+          <input type="text" value={this.state.value} onChange={this.handleChange} /></label>
+        
         <input type="submit" value="Submit" />
+
       </form>
-      <form onSubmit={this.renderModify}>
-          <button type="submit">render</button>
+
+      <RenderList variable={this.state.variable}/>
+     
+      <form onSubmit={this.renderListener}>
+          <button type="submit">Get Created Poll</button>
         </form>
         </>
     );
