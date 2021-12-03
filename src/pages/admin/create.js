@@ -356,28 +356,6 @@ export default class Create extends React.Component {
     invitees: [],
     isPublished: false,
   }
-
-  renderModify = event => {
-    event.preventDefault()
-    console.log(data)
-    this.setState({
-      title: data[8].title,
-      location: data[8].location,
-      notesComments: data[8].notesComments,
-      timeZone: data[8].timeZone,
-      startDate: data[8].startDate,
-      startTime: data[8].startTime,
-      endTime: data[8].endTime,
-      numBlocks: data[8].numBlocks,
-      sessionTime: data[8].sessionTime, 
-      restrictSlots: data[8].restrictSlots,
-      restrictNumParticipants: data[8].restrictNumParticipants,
-      deadline: data[8].deadline,
-      invite: data[8].invite,
-      invitees: data[8].invitees,
-      isPublished: data[8].isPublished,
-    })
-  }
   handleInputChange = event => {
     const target = event.target
     const value = target.value
@@ -632,9 +610,6 @@ export default class Create extends React.Component {
         <CancelButton type="submit">Cancel</CancelButton>
         
 
-        <form onSubmit={this.renderModify}>
-          <button type="submit">render</button>
-        </form>
 
       </div>
       </Layout>
@@ -674,7 +649,7 @@ class CalendarComponent extends React.Component {
 
 function RenderTimeZones({timeZoneState, handleInputChange}){
   return (
-    <select name={timeZoneState} timeZone={timeZoneState} onChange={handleInputChange}>   
+    <select name="timeZone" timeZone={timeZoneState} onChange={handleInputChange}>   
             <option timeZone="Select Time Zone">Select Time Zone</option>         
             <option timeZone="Eastern Standard Time">Eastern Standard Time</option>
             <option timeZone="Central Standard Time">Central Standard Time</option>
