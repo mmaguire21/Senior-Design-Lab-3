@@ -245,7 +245,8 @@ export default class Create extends React.Component {
     isPublished: false,
   }
 
-  renderModify = event => {
+
+    renderModify = event => {
     const docid = sessionStorage.getItem('id')
     var index = 0;
     event.preventDefault()
@@ -275,6 +276,7 @@ export default class Create extends React.Component {
       isPublished: data[index].isPublished,
     })
   }
+
   handleInputChange = event => {
     const target = event.target
     const value = target.value
@@ -377,6 +379,7 @@ export default class Create extends React.Component {
     })
     editPoll(db, this.state.title, this.state.location, this.state.notesComments, this.state.timeZone, this.state.startDate, this.state.startTime, this.state.endTime, this.state.numBlocks, this.state.sessionTime, this.state.restrictSlots, this.state.restrictNumParticipants, this.state.deadline, this.state.invite, this.state.invitees, true, sessionStorage.getItem('id') )
     alert(`Title: ${this.state.title}\n Location: ${this.state.location}\n Notes and Comments: ${this.state.notesComments}\n timeZone: ${this.state.timeZone}\n startDate: ${this.state.startDate}\n startTime: ${this.state.startTime}\n endTime: ${this.state.endTime}\n numBlocks: ${this.state.numBlocks}\n sessionTime: ${this.state.sessionTime}\n restrictSlots: ${this.state.restrictSlots}\n restrictNumParticipants: ${this.state.restrictNumParticipants}\n deadline: ${this.state.deadline}\n invite: ${this.state.invite}\n invitees: ${this.state.invitees}\n isPublished: ${true}\n `)
+    
   }
   handleSave = event => {
     event.preventDefault()
@@ -517,14 +520,17 @@ export default class Create extends React.Component {
         <DateTime 
           onChange={this.handleDeadlineChange}
         />
+        
         <form onSubmit={this.handlePublish}>
           <SubmitButton type="submit">Publish</SubmitButton>
         </form>
+        
         <form onSubmit={this.handleSave}>
           <SaveButton type="submit">Save</SaveButton>
         </form>
-        
-        <CancelButton type="submit">Cancel</CancelButton>
+        <Link to="/admin/home">
+          <CancelButton type="submit">Cancel</CancelButton>
+        </Link>
         
 
         <form onSubmit={this.renderModify}>
