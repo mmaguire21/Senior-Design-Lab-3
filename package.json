@@ -16,11 +16,13 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.8.0",
+    "@firebase/firestore": "^3.4.0",
     "firebase": "^9.6.0",
     "fs": "^0.0.1-security",
     "gatsby": "^4.1.0",
     "gatsby-cli": "^4.2.0",
     "gatsby-plugin-image": "^2.2.0",
+    "gatsby-plugin-provide-react": "^1.0.2",
     "gatsby-plugin-sharp": "^4.2.0",
     "gatsby-source-filesystem": "^4.2.0",
     "gatsby-transformer-sharp": "^4.1.0",
