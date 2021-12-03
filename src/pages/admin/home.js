@@ -108,7 +108,7 @@ function RenderList({titleList}){
                         {poll.title}
                         <text> </text>
                         <Link to="/admin/modify">
-                            <button>(modify)</button>
+                            <button onClick={() => sessionStorage.setItem("id", poll.id)}>(modify)</button>
                         </Link>
                         <button onClick={remind}>(remind)</button>
                         <button onClick={() => publish(poll.id)}>(publish)</button>

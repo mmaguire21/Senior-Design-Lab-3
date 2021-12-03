@@ -179,10 +179,11 @@ async function getCities(db) {
   return citySnapshot;
 }
 
-async function editPoll(db, pollIndex){
-  const docRef = doc(db, 'Polls/'.concat(idList[pollIndex]));
+async function editPoll(db, title, loc, notes, zone, startDate, startTime, endTime, numBlocks, sesh, restrictS, restrictP, deadline, invite, invitees, isPublished, id){
+  const docRef = doc(db, 'Polls/'.concat(id));
   const docSnap = await getDoc(docRef);
-  await updateDoc(docRef, "location", 'Editted Poll');
+  await updateDoc(docRef, "title", title);
+  await updateDoc(docRef, "location", loc);
 }
 
 async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTime, numBlocks, sesh, restrictS, restrictP, deadline, invite, invitees, isPublished) {
@@ -245,24 +246,33 @@ export default class Create extends React.Component {
   }
 
   renderModify = event => {
+    const docid = sessionStorage.getItem('id')
+    var index = 0;
     event.preventDefault()
+    var i = 0;
+    while(i < docLength){
+      if(data[i].id == docid){
+        index = i;
+      }
+      i = i + 1;
+    }
     console.log(data)
     this.setState({
-      title: data[8].title,
-      location: data[8].location,
-      notesComments: data[8].notesComments,
-      timeZone: data[8].timeZone,
-      startDate: data[8].startDate,
-      startTime: data[8].startTime,
-      endTime: data[8].endTime,
-      numBlocks: data[8].numBlocks,
-      sessionTime: data[8].sessionTime, 
-      restrictSlots: data[8].restrictSlots,
-      restrictNumParticipants: data[8].restrictNumParticipants,
-      deadline: data[8].deadline,
-      invite: data[8].invite,
-      invitees: data[8].invitees,
-      isPublished: data[8].isPublished,
+      title: data[index].title,
+      location: data[index].location,
+      notesComments: data[index].notesComments,
+      timeZone: data[index].timeZone,
+      startDate: data[index].startDate,
+      startTime: data[index].startTime,
+      endTime: data[index].endTime,
+      numBlocks: data[index].numBlocks,
+      sessionTime: data[index].sessionTime, 
+      restrictSlots: data[index].restrictSlots,
+      restrictNumParticipants: data[index].restrictNumParticipants,
+      deadline: data[index].deadline,
+      invite: data[index].invite,
+      invitees: data[index].invitees,
+      isPublished: data[index].isPublished,
     })
   }
   handleInputChange = event => {
@@ -365,11 +375,12 @@ export default class Create extends React.Component {
     this.setState({
       isPublished: true,
     })
-    savePoll(db, this.state.title, this.state.location, this.state.notesComments, this.state.timeZone, this.state.startDate, this.state.startTime, this.state.endTime, this.state.numBlocks, this.state.sessionTime, this.state.restrictSlots, this.state.restrictNumParticipants, this.state.deadline, this.state.invite, this.state.invitees, true )
+    editPoll(db, this.state.title, this.state.location, this.state.notesComments, this.state.timeZone, this.state.startDate, this.state.startTime, this.state.endTime, this.state.numBlocks, this.state.sessionTime, this.state.restrictSlots, this.state.restrictNumParticipants, this.state.deadline, this.state.invite, this.state.invitees, true, sessionStorage.getItem('id') )
     alert(`Title: ${this.state.title}\n Location: ${this.state.location}\n Notes and Comments: ${this.state.notesComments}\n timeZone: ${this.state.timeZone}\n startDate: ${this.state.startDate}\n startTime: ${this.state.startTime}\n endTime: ${this.state.endTime}\n numBlocks: ${this.state.numBlocks}\n sessionTime: ${this.state.sessionTime}\n restrictSlots: ${this.state.restrictSlots}\n restrictNumParticipants: ${this.state.restrictNumParticipants}\n deadline: ${this.state.deadline}\n invite: ${this.state.invite}\n invitees: ${this.state.invitees}\n isPublished: ${true}\n `)
   }
   handleSave = event => {
     event.preventDefault()
+    editPoll(db, this.state.title, this.state.location, this.state.notesComments, this.state.timeZone, this.state.startDate, this.state.startTime, this.state.endTime, this.state.numBlocks, this.state.sessionTime, this.state.restrictSlots, this.state.restrictNumParticipants, this.state.deadline, this.state.invite, this.state.invitees, this.state.isPublished, sessionStorage.getItem('id') )
     alert(`Title: ${this.state.title}\n Location: ${this.state.location}\n Notes and Comments: ${this.state.notesComments}\n timeZone: ${this.state.timeZone}\n startDate: ${this.state.startDate}\n startTime: ${this.state.startTime}\n endTime: ${this.state.endTime}\n numBlocks: ${this.state.numBlocks}\n sessionTime: ${this.state.sessionTime}\n restrictSlots: ${this.state.restrictSlots}\n restrictNumParticipants: ${this.state.restrictNumParticipants}\n deadline: ${this.state.deadline}\n invite: ${this.state.invite}\n invitees: ${this.state.invitees}\n isPublished: ${this.state.isPublished}\n `)
   }
   // handleCancel = event =>
@@ -525,18 +536,6 @@ export default class Create extends React.Component {
     )
   }
 }
-
-//Step 2
-class CalendarComponent extends React.Component {
-    render(){
-        return (
-        <div>
-            
-
-        </div>
-        )
-    }
-  }
 
 
   function RenderList({emailList}){
