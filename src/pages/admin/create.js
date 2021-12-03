@@ -50,9 +50,7 @@ const theme = {
 const SubmitButton = styled.button`
 background-color: ${(props) => theme[props.theme].default};
 color: white;
-position: absolute;
-top:px;
-left:450px;
+position: bottom;
 padding: 5px 15px;
 border-radius: 5px;
 outline: 0;
@@ -78,9 +76,9 @@ SubmitButton.defaultProps = {
 const SaveButton = styled.button`
 background-color: ${(props) => theme[props.theme].default};
 color: white;
-position: absolute;
-top:800px;
-left:560px;
+position: relative;
+bottom:48px;
+left:125px;
 padding: 5px 15px;
 border-radius: 5px;
 outline: 0;
@@ -106,9 +104,9 @@ SaveButton.defaultProps = {
 const CancelButton = styled.button`
 background-color: ${(props) => theme[props.theme].default};
 color: white;
-position: absolute;
-top:800px;
-left:650px;
+position: relative;
+bottom: 97px;
+left: 225px;
 padding: 5px 15px;
 border-radius: 5px;
 outline: 0;
@@ -135,8 +133,8 @@ const InviteButton = styled.button`
 background-color: ${(props) => theme[props.theme].default};
 color: white;
 position: absolute;
-top:110px;
-left:800px;
+top:743px;
+left:570px;
 padding: 5px 15px;
 border-radius: 5px;
 outline: 0;
@@ -337,6 +335,7 @@ export default class Create extends React.Component {
         <input
             type="text"
             name="title"
+            placeholder="Title"
             value={this.state.title}
             onChange={this.handleInputChange}
         />
@@ -346,6 +345,7 @@ export default class Create extends React.Component {
         <input
             type="text"
             name="location"
+            Placeholder="Location"
             value={this.state.location}
             onChange={this.handleInputChange}
         />
@@ -357,6 +357,7 @@ export default class Create extends React.Component {
         <input
             type="text"
             name="notesComments"
+            Placeholder="Notes and Comments"
             value={this.state.notesComments}
             onChange={this.handleInputChange}
         />
@@ -379,6 +380,7 @@ export default class Create extends React.Component {
             selectRange={this.range}
             onChange={this.handleCalendarChange}
         />
+        <br></br>
         <label>
             Start time:
             <select name="startTime" startTime={this.state.startTime} onChange={this.handleStartOrEndTimeChange}>   
@@ -584,25 +586,31 @@ export default class Create extends React.Component {
 
             
             <label>
-            Number of Blocks
+           <p>Number of Blocks:
             <input
                 type="text"
                 name="numBlocks"
+                Placeholder="Number of Sessions"
                 value={this.state.numBlocks}
                 onChange={this.handleBlocksInputChange}
             />
+            </p>
             </label>
             <label>
-            Length of Session
+              <p>
+            Length of Session:
             <input
                 type="text"
                 name="sessionTime"
+                Placeholder="Length of each Session"
                 value={this.state.sessionTime}
                 onChange={this.handleBlocksInputChange}
             />
+            </p>
             </label>
             {/* restrict votes per slot */}
             <label>
+              <p>
               <input
                 type="checkbox"
                 name="restrictSlots"
@@ -610,9 +618,12 @@ export default class Create extends React.Component {
                 onChange={this.handleRestrictSlots}
               />
               Restrict votes per slot 
+              </p>
             </label>
+          
             {/* restrict votes per participant */}
             <label>
+              <p>
               <input
                 type="checkbox"
                 name="restrictNumParticipants"
@@ -620,34 +631,25 @@ export default class Create extends React.Component {
                 onChange={this.handleRestrictParticipants}
               />
               Restrict votes per participant
-              
+              </p>
             </label>
-                
-        <br/>
-        <RenderList emailList={this.state.invitees}/>
-
-        <br/>
         <label>
-          <br/>
-          <h4>
-            Invite
-          </h4>
+        <p><u><b>Step 3: Invite Participants</b></u></p>
+            Invite:
           <form onSubmit={this.handleInviteSubmit}>
             <label>
             <input
                 type="text"
                 name="invite"
+                Placeholder="email"
                 value={this.state.invite}
                 onChange={this.handleInputChange}
             />
             </label>
+            <RenderList emailList={this.state.invitees}/>
             <InviteButton type="submit">Add Invite</InviteButton>
           </form>
-
-         
-
-          <br/>
-          <br/>
+          <p><u><b>Step 4: Set a Deadline</b></u></p>
           Deadline:
         </label>
 
