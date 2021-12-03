@@ -9,6 +9,7 @@ import "react-datetime/css/react-datetime.css";
 
 
 import { initializeApp } from 'firebase/app';
+import { deleteDoc } from "firebase/firestore";
 import { getFirestore, collection, getDocs, addDoc, getDoc } from 'firebase/firestore/lite';
 import {
   updateDoc,
@@ -208,13 +209,16 @@ async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTi
 
 var data;
 
-function RenderDocs(){
+async function RenderDocs(){
+  
+
+  await deleteDoc(doc(db, "Polls", "aH00CiJKm46SuuD3aUg7"));
   getCities(db).then((snapshot) => {
     data = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
-    console.log(data[0].title); 
+    console.log(data); 
     
     // [ { id: 'glMeZvPpTN1Ah31sKcnj', title: 'The Great Gatsby' } ]
   });
