@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Lab 3 ",
-  "author": "<mmaguire21>",
+  "author": " <mmaguire21>",
   "keywords": [
     "gatsby"
   ],
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.8.0",
+    "@sendgrid/mail": "^7.6.0",
     "firebase": "^9.6.0",
     "fs": "^0.0.1-security",
     "gatsby": "^4.1.0",
@@ -25,6 +26,7 @@
     "gatsby-source-filesystem": "^4.2.0",
     "gatsby-transformer-sharp": "^4.1.0",
     "moment": "^2.29.1",
+    "path-browserify": "^1.0.1",
     "react": "^17.0.1",
     "react-calendar": "^3.5.0",
     "react-cool-text": "^1.0.19",
@@ -33,5 +35,15 @@
     "react-day-picker": "^7.4.10",
     "react-dom": "^17.0.1",
     "styled-components": "^5.3.3"
-  }
+  },
+  "main": "gatsby-config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmaguire21/Senior-Design-Lab-3.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmaguire21/Senior-Design-Lab-3/issues"
+  },
+  "homepage": "https://github.com/mmaguire21/Senior-Design-Lab-3#readme"
 }
