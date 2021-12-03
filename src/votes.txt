@@ -1,0 +1,5 @@
+{
+    emailList: [],
+    startTime: string,
+    endTime: string,
+}
