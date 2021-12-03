@@ -344,7 +344,7 @@ export default class Create extends React.Component {
     location: "",
     notesComments: "",
     timeZone: "None",
-    startDate: "",
+    startDate: new Date(),
     startTime: "0",
     endTime: "0",
     numBlocks: "",
