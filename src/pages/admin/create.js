@@ -287,31 +287,38 @@ async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTi
   var timeSlotArr = [];
   const diff = endTime - startTime;
 
-  for(var i = 0; i < numBlocks; i++){
-    timeSlotArr.push({
-      emailList: [],
-      startTime: timeConverter[(parseInt(startTime,10) + (parseInt(sesh,10)*i)).toString()],
-      endTime: timeConverter[(parseInt(startTime,10) + parseInt(sesh,10) + (parseInt(sesh,10)*i)).toString()],
-    })
+  if(title.length == 0){
+    alert(`Title field is required`)
   }
-  const docRef = await addDoc(collection(db, "Polls"), {
-    title: title,
-    location: loc,
-    notesComments: notes,
-    timeZone: zone,
-    startDate: startDate,
-    startTime: startTime,
-    endTime: endTime,
-    numBlocks: numBlocks,
-    sessionTime: sesh, 
-    restrictSlots: restrictS,
-    restrictNumParticipants: restrictP,
-    deadline: deadline,
-    invite: invite,
-    invitees: invitees,
-    isPublished: isPublished,
-    timeSlots: timeSlotArr,
-  });
+  else{
+    for(var i = 0; i < numBlocks; i++){
+      timeSlotArr.push({
+        emailList: [],
+        startTime: timeConverter[(parseInt(startTime,10) + (parseInt(sesh,10)*i)).toString()],
+        endTime: timeConverter[(parseInt(startTime,10) + parseInt(sesh,10) + (parseInt(sesh,10)*i)).toString()],
+      })
+    }
+    const docRef = await addDoc(collection(db, "Polls"), {
+      title: title,
+      location: loc,
+      notesComments: notes,
+      timeZone: zone,
+      startDate: startDate,
+      startTime: startTime,
+      endTime: endTime,
+      numBlocks: numBlocks,
+      sessionTime: sesh, 
+      restrictSlots: restrictS,
+      restrictNumParticipants: restrictP,
+      deadline: deadline,
+      invite: invite,
+      invitees: invitees,
+      isPublished: isPublished,
+      timeSlots: timeSlotArr,
+    });
+  }
+
+  
 }
 
 
@@ -456,7 +463,9 @@ export default class Create extends React.Component {
       isPublished: true,
     })
     savePoll(db, this.state.title, this.state.location, this.state.notesComments, this.state.timeZone, this.state.startDate, this.state.startTime, this.state.endTime, this.state.numBlocks, this.state.sessionTime, this.state.restrictSlots, this.state.restrictNumParticipants, this.state.deadline, this.state.invite, this.state.invitees, true )
-    alert(`Title: ${this.state.title}\n Location: ${this.state.location}\n Notes and Comments: ${this.state.notesComments}\n timeZone: ${this.state.timeZone}\n startDate: ${this.state.startDate}\n startTime: ${this.state.startTime}\n endTime: ${this.state.endTime}\n numBlocks: ${this.state.numBlocks}\n sessionTime: ${this.state.sessionTime}\n restrictSlots: ${this.state.restrictSlots}\n restrictNumParticipants: ${this.state.restrictNumParticipants}\n deadline: ${this.state.deadline}\n invite: ${this.state.invite}\n invitees: ${this.state.invitees}\n isPublished: ${true}\n `)
+    if(this.state.title.length != 0){
+      alert(`Title: ${this.state.title}\n Location: ${this.state.location}\n Notes and Comments: ${this.state.notesComments}\n timeZone: ${this.state.timeZone}\n startDate: ${this.state.startDate}\n startTime: ${this.state.startTime}\n endTime: ${this.state.endTime}\n numBlocks: ${this.state.numBlocks}\n sessionTime: ${this.state.sessionTime}\n restrictSlots: ${this.state.restrictSlots}\n restrictNumParticipants: ${this.state.restrictNumParticipants}\n deadline: ${this.state.deadline}\n invite: ${this.state.invite}\n invitees: ${this.state.invitees}\n isPublished: ${true}\n `)
+    }
   }
   handleSave = event => {
     event.preventDefault()
