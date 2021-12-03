@@ -74,7 +74,7 @@ async function getPolls() {
     return pollSnapshot
 }
 
-let polls = ["Poll 1"];
+let polls = [];
 
 function RenderDocs(){
     getPolls(db).then((snapshot) => {
@@ -84,28 +84,27 @@ function RenderDocs(){
         }));
         console.log(data);
 
-        // [ { id: 'glMeZvPpTN1Ah31sKcnj', title: 'The Great Gatsby' } ]
     });
 }
 
 function getData(){
     let i = 0;
     while (i < length) {
-        console.log(data[i].title);
+        polls[i] = data[i];
         i++;
     }
 }
 
 RenderDocs();
 
-const RenderList = props => {
+function RenderList({titleList}){
 
     return (
         <ul>
-            {polls.map(poll => (
+            {titleList.map(poll => (
                 <li>
                     <nav>
-                        {poll}
+                        {poll.title}
                         <text> </text>
                         <Link to="/admin/modify">
                             <button>(modify)</button>
@@ -119,22 +118,38 @@ const RenderList = props => {
     );
 };
 
-export default function Home() {
-    return (
-        <Layout pageTitle="Admin Home Page">
+export default class Home extends React.Component {
+    state = {
+        titleList: [],
+        isPublishedList: [],
+    }
+
+    renderListener = event => {
+        getData();
+        event.preventDefault()
+        this.setState({
+            titleList: polls,
+        })
+    }
+
+    render() {
+        return (
+            <Layout pageTitle="Admin Home Page">
             <Link to="/admin/create">
-                <Button>Create A Poll</Button>
+            <Button>Create A Poll</Button>
             </Link>
 
             <p>Create Modify or Publish Polls on this Page</p>
 
-            <RenderList/>
+            <RenderList titleList={this.state.titleList}/>
 
             <Link to="/login">
-                <Button>Logout</Button>
+            <Button>Logout</Button>
             </Link>
 
-            <Button onClick={getData}>Render</Button>
-        </Layout>
-    )
+            <Button onClick={this.renderListener}>Render</Button>
+            </Layout>
+        )
+}
+
 }
