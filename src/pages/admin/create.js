@@ -621,7 +621,7 @@ export default class Create extends React.Component {
         </a>
 
         <a href={"/admin/home"}>
-        <CancelButton>Cancel</CancelButton>
+        <CancelButton>Back</CancelButton>
         </a>
 
 

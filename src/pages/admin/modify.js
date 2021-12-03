@@ -636,7 +636,7 @@ export default class Create extends React.Component {
           <SaveButton type="submit">Save</SaveButton>
         </form>
         <Link to="/admin/home">
-          <CancelButton type="submit">Cancel</CancelButton>
+          <CancelButton type="submit">Back</CancelButton>
         </Link>
         
 
