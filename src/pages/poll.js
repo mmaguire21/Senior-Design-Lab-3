@@ -29,15 +29,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const cafeList = document.querySelector('#cafe-list')
-const form = document.querySelector('#add-cafe-form')
 
 // Get a list of cities from your database
 async function getCities(db) {
   const citiesCol = collection(db, 'Polls');
   const citySnapshot = await getDocs(citiesCol);
   const cityList = citySnapshot.docs.map(doc => doc.data());
-  return cityList;
+  return citySnapshot;
 }
 
 async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTime, numBlocks, sesh, restrictS, restrictP, deadline, invite, invitees, isPublished) {
@@ -61,7 +59,27 @@ async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTi
 }
 
 
-getCities(db).then((response) => console.log(response[0].title));
+//getCities(db).then((response) => console.log(response[0].title));
+
+var data;
+
+function RenderDocs(){
+  getCities(db).then((snapshot) => {
+    data = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    console.log(data); 
+
+    // [ { id: 'glMeZvPpTN1Ah31sKcnj', title: 'The Great Gatsby' } ]
+  });
+}
+
+
+RenderDocs(); 
+
+
+
 
 
 export default class NameForm extends React.Component{
@@ -86,11 +104,11 @@ export default class NameForm extends React.Component{
       [name]: event,
     })
   }
-
-
+  
   render() {
     return (
       <>
+      
       <Layout pageTitle= "Poll Details">
         </Layout>
         <Calendar>
@@ -103,6 +121,9 @@ export default class NameForm extends React.Component{
           <input type="text" value={this.state.value} onChange={this.handleChange} />   </label>
         <input type="submit" value="Submit" />
       </form>
+      <form onSubmit={this.renderModify}>
+          <button type="submit">render</button>
+        </form>
         </>
     );
   }
