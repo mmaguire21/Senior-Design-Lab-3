@@ -667,7 +667,7 @@ export default class Create extends React.Component {
             ))}
         </ul>
     );
-};
+}
 
 function RenderTimeZones({timeZoneState, handleInputChange}){
   return (
