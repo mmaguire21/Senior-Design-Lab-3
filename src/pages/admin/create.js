@@ -600,15 +600,21 @@ export default class Create extends React.Component {
         <DateTime 
           onChange={this.handleDeadlineChange}
         />
+        <a href={"/admin/home"}>
         <form onSubmit={this.handlePublish}>
           <SubmitButton type="submit">Publish</SubmitButton>
         </form>
+        </a>
+
+        <a href={"/admin/home"}>
         <form onSubmit={this.handleSave}>
           <SaveButton type="submit">Save</SaveButton>
         </form>
-        
-        <CancelButton type="submit">Cancel</CancelButton>
-        
+        </a>
+
+        <a href={"/admin/home"}>
+        <CancelButton>Cancel</CancelButton>
+        </a>
 
 
       </div>
