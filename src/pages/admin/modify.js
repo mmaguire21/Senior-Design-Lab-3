@@ -133,28 +133,28 @@ CancelButton.defaultProps = {
 };
 
 const InviteButton = styled.button`
-background-color: ${(props) => theme[props.theme].default};
-color: white;
-position: absolute;
-top:743px;
-left:570px;
-padding: 5px 15px;
-border-radius: 5px;
-outline: 0;
-text-transform: uppercase;
-margin: 10px 0;
-cursor: pointer;
-box-shadow: 0 2px 2px lightgray;
-transition: ease background-color 250ms;
+  background-color: ${(props) => theme[props.theme].default};
+  color: white;
+  position: relative;
+  bottom:1px;
+  left:20px;
+  padding: 5px 15px;
+  border-radius: 5px;
+  outline: 0;
+  text-transform: uppercase;
+  margin: 10px 0;
+  cursor: pointer;
+  box-shadow: 0 2px 2px lightgray;
+  transition: ease background-color 250ms;
 
-&:hover {
-  background-color: ${(props) => theme[props.theme].hover};
-}
+  &:hover {
+    background-color: ${(props) => theme[props.theme].hover};
+  }
 
-&:disabled {
-  cursor: default;
-  opacity: 0.7;
-}`;
+  &:disabled {
+    cursor: default;
+    opacity: 0.7;
+  }`;
 
 InviteButton.defaultProps = {
   theme: "blue"
@@ -617,9 +617,9 @@ export default class Create extends React.Component {
                 onChange={this.handleInputChange}
             />
             </label>
-            <RenderList emailList={this.state.invitees}/>
             <InviteButton type="submit">Add Invite</InviteButton>
           </form>
+            <RenderList emailList={this.state.invitees}/>
           <p><u><b>Step 4: Set a Deadline</b></u></p>
           Deadline:
         </label>
