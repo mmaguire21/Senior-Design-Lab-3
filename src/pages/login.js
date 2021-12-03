@@ -22,8 +22,8 @@ const theme = {
 const Button = styled.button`
 background-color: ${(props) => theme[props.theme].default};
 color: white;
-position: absolute;
-top:150px;
+position: relative;
+bottom:10px;
 left:500px;
 padding: 5px 15px;
 border-radius: 5px;
