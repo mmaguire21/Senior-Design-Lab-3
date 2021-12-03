@@ -172,8 +172,13 @@ export default class NameForm extends React.Component{
 
       <form onSubmit={this.handleSubmit}>
         <label>
-          Email:
-          <input type="text" value={this.state.value} onChange={this.handleChange} /></label>
+          Identifier:
+          <input 
+          type="text" 
+          value={this.state.value} 
+          onChange={this.handleChange}
+          Placeholder="Name/email"
+           /></label>
         
         <input type="submit" value="Submit" />
 
