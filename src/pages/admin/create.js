@@ -136,9 +136,9 @@ CancelButton.defaultProps = {
 const InviteButton = styled.button`
 background-color: ${(props) => theme[props.theme].default};
 color: white;
-position: absolute;
-top:743px;
-left:570px;
+position: relative;
+bottom:1px;
+left:20px;
 padding: 5px 15px;
 border-radius: 5px;
 outline: 0;
@@ -460,6 +460,7 @@ export default class Create extends React.Component {
             </label>
             {/* restrict votes per slot */}
             <label>
+
               <p>
               <input
                 type="checkbox"
@@ -496,9 +497,11 @@ export default class Create extends React.Component {
                 onChange={this.handleInputChange}
             />
             </label>
-            <RenderList emailList={this.state.invitees}/>
             <InviteButton type="submit">Add Invite</InviteButton>
-          </form>
+            </form>
+            <RenderList emailList={this.state.invitees}/>
+            
+          
           <p><u><b>Step 4: Set a Deadline</b></u></p>
           Deadline:
         </label>
