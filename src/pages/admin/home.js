@@ -56,8 +56,6 @@ Button.defaultProps = {
     theme: "blue"
 };
 
-
-
 let data;
 let length;
 let idList;
@@ -78,10 +76,12 @@ function RenderDocs(){
             id: doc.id,
             ...doc.data(),
         }));
-        console.log(data[0].isPublished);
+        //console.log(data[0].isPublished);
 
     });
 }
+
+RenderDocs();
 
 function getData(){
     let i = 0;
@@ -91,8 +91,6 @@ function getData(){
     }
 }
 
-RenderDocs();
-
 async function editPoll(id, value){
     const docRef = doc(db, 'Polls/' + id);
     const docSnap = await getDoc(docRef);
@@ -101,16 +99,39 @@ async function editPoll(id, value){
 
 function RenderList({titleList}){
     function remind(id) {
+        let invitedUsers = [];
+        let i = 0;
+        while (i < length) {
+            if (polls[i].id === id) {
+                invitedUsers = polls[i].invitees;
+                console.log(polls);
+            }
+            i++;
+        }
+
+        //TODO: Put text functionality here
+        const url = "/poll?" + id   //This is the url for the specific poll
+
+        let j = 0;
+        while (j < invitedUsers.length) {
+            // Send text to invitedUsers[i]
+            j++;
+        }
+
         alert("Members of the poll have been reminded. The Poll id is: " + id)
     }
 
     function publish(id) {
+        let invitedUsers = [];
         let i = 0;
         let curVal = "false";
         while (i < length) {
             if (polls[i].id === id) {
                 curVal = polls[i].isPublished;
+                invitedUsers = polls[i].invitees;
+                console.log(invitedUsers);
             }
+            console.log(polls[i].title + " publish status: " + data[i].isPublished);
             i++;
         }
         if (curVal === "true") {
@@ -120,6 +141,13 @@ function RenderList({titleList}){
 
             //TODO: Put text functionality here
             const url = "/poll?" + id   //This is the url for the specific poll
+
+            let i = 0;
+            while (i < invitedUsers.length) {
+                // Send text to invitedUsers[i]
+                i++;
+            }
+
         }
         alert("The poll has been published. The Poll id is: " + id)
     }
@@ -151,7 +179,7 @@ function RenderList({titleList}){
 export default class Home extends React.Component {
     state = {
         titleList: [],
-        isPublishedList: [],
+        isPublishedList: []
     }
 
     renderListener = event => {
@@ -187,6 +215,6 @@ export default class Home extends React.Component {
                 </div>
             </Layout>
         )
-}
+    }
 
 }
