@@ -7,6 +7,14 @@ import {initializeApp} from 'firebase/app';
 import {collection, getDoc, getDocs, getFirestore} from 'firebase/firestore/lite';
 import {doc, updateDoc} from "@firebase/firestore/lite";
 
+// Twilio SMS stuff
+/*
+const accountSid = "b8e335ae3b9a71ee205cd6988e010480";
+const authToken = "AC126246eddfec54db678be82f32de9820";
+const client = require('twilio')(accountSid, authToken);
+*/
+
+// Database stuff
 const firebaseConfig = {
     apiKey: "AIzaSyBqaR9GxYcVJ3CS-hkEL8rOPOkjNwCkkec",
     authDomain: "senior-design-lab-3-d6e2e.firebaseapp.com",
@@ -59,6 +67,7 @@ Button.defaultProps = {
 let data;
 let length;
 let idList;
+let polls = [];
 
 async function getPolls() {
     const pollCol = collection(db, 'Polls');
@@ -68,7 +77,15 @@ async function getPolls() {
     return pollSnapshot
 }
 
-let polls = [];
+/*function sendMessage() {
+    client.messages
+        .create({
+            body: "This is a text from twilio biiiiitch!",
+            from: "+13396746823",
+            to: "+18157686694"
+        })
+        .then(message => console.log("Message Sent"/!*message.sid*!/)).catch(message => console.log(message));
+}*/
 
 function RenderDocs(){
     getPolls(db).then((snapshot) => {
@@ -99,6 +116,7 @@ async function editPoll(id, value){
 
 function RenderList({titleList}){
     function remind(id) {
+        //sendMessage();
         let invitedUsers = [];
         let i = 0;
         while (i < length) {
@@ -111,7 +129,7 @@ function RenderList({titleList}){
 
         //TODO: Put text functionality here
         const url = "/poll?" + id   //This is the url for the specific poll
-
+                                    //Update this URL when the website goes live
         let j = 0;
         while (j < invitedUsers.length) {
             // Send text to invitedUsers[i]
@@ -140,8 +158,8 @@ function RenderList({titleList}){
             editPoll(id, "true")
 
             //TODO: Put text functionality here
-            const url = "/poll?" + id   //This is the url for the specific poll
-
+            const url = "http://localhost:8000/poll?" + id   //This is the url for the specific poll
+                                                             //Update this URL when the website goes live
             let i = 0;
             while (i < invitedUsers.length) {
                 // Send text to invitedUsers[i]

@@ -20,7 +20,6 @@ import {
 // Follow this pattern to import other Firebase services
 // import { } from 'firebase/<service>';
 
-// TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
 
   apiKey: "AIzaSyBqaR9GxYcVJ3CS-hkEL8rOPOkjNwCkkec",
