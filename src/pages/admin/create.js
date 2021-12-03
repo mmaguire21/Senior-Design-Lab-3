@@ -7,7 +7,10 @@ import "react-datetime/css/react-datetime.css";
 
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, addDoc, getDoc } from 'firebase/firestore/lite';
-import { doc, setDoc } from "firebase/firestore"; 
+import {
+  updateDoc,
+  doc
+ } from '@firebase/firestore/lite';
 
 
 // Follow this pattern to import other Firebase services
@@ -37,12 +40,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+var docLength;
+var idList = []; 
+
 // Get a list of cities from your database
 async function getCities(db) {
   const citiesCol = collection(db, 'Polls');
   const citySnapshot = await getDocs(citiesCol);
   const cityList = citySnapshot.docs.map(doc => doc.data());
-  return cityList;
+  idList = citySnapshot.docs.map(doc => doc.id);
+  docLength = idList.length;
+  return citySnapshot;
+}
+
+async function editPoll(db, pollIndex){
+  const docRef = doc(db, 'Polls/'.concat(idList[pollIndex]));
+  const docSnap = await getDoc(docRef);
+  await updateDoc(docRef, "location", 'Editted Poll');
 }
 
 async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTime, numBlocks, sesh, restrictS, restrictP, deadline, invite, invitees, isPublished) {
@@ -65,12 +79,27 @@ async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTi
   });
 }
 
-getCities(db).then((response) => console.log(response[0].title));
 
+var data;
+
+function RenderDocs(){
+  getCities(db).then((snapshot) => {
+    data = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    console.log(data[0].title); 
+    
+    // [ { id: 'glMeZvPpTN1Ah31sKcnj', title: 'The Great Gatsby' } ]
+  });
+}
+
+RenderDocs()
+
+//console.log(data[0].title)
 
 export default class Create extends React.Component {
   range = true;
-
   state = {
     title: "",
     location: "",
@@ -87,6 +116,27 @@ export default class Create extends React.Component {
     invite: [],
     invitees: [],
     isPublished: false,
+  }
+
+  renderModify = event => {
+    event.preventDefault()
+    this.setState({
+      title: data[0].title,
+      location: data[0].location,
+      notesComments: data[0].notesComments,
+      timeZone: data[0].timeZone,
+      startDate: data[0].startDate,
+      startTime: data[0].startTime,
+      endTime: data[0].endTime,
+      numBlocks: data[0].numBlocks,
+      sessionTime: data[0].sessionTime, 
+      restrictSlots: data[0].restrictSlots,
+      restrictNumParticipants: data[0].restrictNumParticipants,
+      deadline: data[0].deadline,
+      invite: data[0].invite,
+      invitees: data[0].invitees,
+      isPublished: data[0].isPublished,
+    })
   }
   handleInputChange = event => {
     const target = event.target
@@ -202,7 +252,6 @@ export default class Create extends React.Component {
   render() {
     return (
         <div>
-        
         <label>
         Title
         <input
@@ -533,6 +582,10 @@ export default class Create extends React.Component {
         </form>
         
         <button type="submit">Cancel</button>
+
+        <form onSubmit={this.renderModify}>
+          <button type="submit">render</button>
+        </form>
 
       </div>
     )
