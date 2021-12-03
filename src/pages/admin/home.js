@@ -4,7 +4,8 @@ import styled from "styled-components";
 import {Link} from 'gatsby'
 
 import {initializeApp} from 'firebase/app';
-import {collection, getDocs, getFirestore} from 'firebase/firestore/lite';
+import {collection, getDoc, getDocs, getFirestore} from 'firebase/firestore/lite';
+import {doc, updateDoc} from "@firebase/firestore/lite";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBqaR9GxYcVJ3CS-hkEL8rOPOkjNwCkkec",
@@ -55,17 +56,16 @@ Button.defaultProps = {
     theme: "blue"
 };
 
-function remind() {
-    alert("Members of the poll have been reminded")
-}
+
 
 let data;
 let length;
+let idList;
 
 async function getPolls() {
     const pollCol = collection(db, 'Polls');
     const pollSnapshot = await getDocs(pollCol);
-    const idList = pollSnapshot.docs.map(doc => doc.id);
+    idList = pollSnapshot.docs.map(doc => doc.id);
     length = idList.length;
     return pollSnapshot
 }
@@ -78,7 +78,7 @@ function RenderDocs(){
             id: doc.id,
             ...doc.data(),
         }));
-        console.log(data[0].title);
+        console.log(data[0].isPublished);
 
     });
 }
@@ -93,11 +93,40 @@ function getData(){
 
 RenderDocs();
 
+async function editPoll(id, value){
+    const docRef = doc(db, 'Polls/' + id);
+    const docSnap = await getDoc(docRef);
+    await updateDoc(docRef, "isPublished", value);
+}
 
 function RenderList({titleList}){
+    function remind(id) {
+        alert("Members of the poll have been reminded. The Poll id is: " + id)
+    }
 
     function publish(id) {
-        alert("The poll has been published id: " + id)
+        let i = 0;
+        let curVal = "false";
+        while (i < length) {
+            if (polls[i].id === id) {
+                curVal = polls[i].isPublished;
+            }
+            i++;
+        }
+        if (curVal === "true") {
+            editPoll(id, "false")
+        } else {
+            editPoll(id, "true")
+
+            //TODO: Put text functionality here
+            const url = "/poll?" + id   //This is the url for the specific poll
+        }
+        alert("The poll has been published. The Poll id is: " + id)
+    }
+
+    function modify(id) {
+        alert("You pressed Modify. The Poll id is: " + id)
+        sessionStorage.setItem("id", id)
     }
 
     return (
@@ -107,10 +136,10 @@ function RenderList({titleList}){
                     <nav>
                         {poll.title}
                         <text> </text>
-                        <Link to="/admin/modify">
+                        <Link to={"/admin/modify?" + poll.id}>
                             <button onClick={() => sessionStorage.setItem("id", poll.id)}>(modify)</button>
                         </Link>
-                        <button onClick={remind}>(remind)</button>
+                        <button onClick={() => remind(poll.id)}>(remind)</button>
                         <button onClick={() => publish(poll.id)}>(publish)</button>
                     </nav>
                 </li>
