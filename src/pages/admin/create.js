@@ -162,6 +162,104 @@ InviteButton.defaultProps = {
   theme: "blue"
 };
 
+var timeConverter = {
+  "0": "12:00am",
+  "15": "12:15am",
+  "30": "12:30am",
+  "45": "12:45am",
+  "60": "1:00am",
+  "75": "1:15am",
+  "90": "1:30am",
+  "105": "1:45am",
+  "120": "2:00am",
+  "135": "2:15am",
+  "150": "2:30am",
+  "165": "2:45am",
+  "180": "3:00am",
+  "195": "3:15am",
+  "210": "3:30am",
+  "225": "3:45am",
+  "240": "4:00am",
+  "255": "4:15am",
+  "270": "4:30am",
+  "285": "4:45am",
+  "300": "5:00am",
+  "315": "5:15am",
+  "330": "5:30am",
+  "345": "5:45am",
+  "360": "6:00am",
+  "375": "6:15am",
+  "390": "6:30am",
+  "405": "6:45am",
+  "420": "7:00am",
+  "435": "7:15am",
+  "450": "7:30am",
+  "465": "7:45am",
+  "480": "8:00am",
+  "495": "8:15am",
+  "510": "8:30am",
+  "525": "8:45am",
+  "540": "9:00am",
+  "555": "9:15am",
+  "570": "9:30am",
+  "585": "9:45am",
+  "600": "10:00am",
+  "615": "10:15am",
+  "630": "10:30am",
+  "645": "10:45am",
+  "660": "11:00am",
+  "675": "11:15am",
+  "690": "11:30am",
+  "705": "11:45am",
+  "720": "12:00pm",
+  "735": "12:15pm",
+  "750": "12:30pm",
+  "765": "12:45pm",
+  "780": "1:00pm",
+  "795": "1:15pm",
+  "810": "1:30pm",
+  "825": "1:45pm",
+  "840": "2:00pm",
+  "855": "2:15pm",
+  "870": "2:30pm",
+  "885": "2:45pm",
+  "900": "3:00pm",
+  "915": "3:15pm",
+  "930": "3:30pm",
+  "945": "3:45pm",
+  "960": "4:00pm",
+  "975": "4:15pm",
+  "990": "4:30pm",
+  "1005": "4:45pm",
+  "1020": "5:00pm",
+  "1035": "5:15pm",
+  "1050": "5:30pm",
+  "1065": "5:45pm",
+  "1080": "6:00pm",
+  "1095": "6:15pm",
+  "1110": "6:30pm",
+  "1125": "6:45pm",
+  "1140": "7:00pm",
+  "1155": "7:15pm",
+  "1170": "7:30pm",
+  "1185": "7:45pm",
+  "1200": "8:00pm",
+  "1215": "8:15pm",
+  "1230": "8:30pm",
+  "1245": "8:45pm",
+  "1260": "9:00pm",
+  "1275": "9:15pm",
+  "1290": "9:30pm",
+  "1305": "9:45pm",
+  "1320": "10:00pm",
+  "1335": "10:15pm",
+  "1350": "10:30pm",
+  "1365": "10:45pm",
+  "1380": "11:00pm",
+  "1395": "11:15pm",
+  "1410": "11:30pm",
+  "1425": "11:45pm",
+}
 
 
 const app = initializeApp(firebaseConfig);
@@ -187,6 +285,16 @@ async function editPoll(db, pollIndex){
 }
 
 async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTime, numBlocks, sesh, restrictS, restrictP, deadline, invite, invitees, isPublished) {
+  var timeSlotArr = [];
+  const diff = endTime - startTime;
+
+  for(var i = 0; i < numBlocks; i++){
+    timeSlotArr.push({
+      emailList: [],
+      startTime: timeConverter[(parseInt(startTime,10) + (parseInt(sesh,10)*i)).toString()],
+      endTime: timeConverter[(parseInt(startTime,10) + parseInt(sesh,10) + (parseInt(sesh,10)*i)).toString()],
+    })
+  }
   const docRef = await addDoc(collection(db, "Polls"), {
     title: title,
     location: loc,
@@ -203,6 +311,7 @@ async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTi
     invite: invite,
     invitees: invitees,
     isPublished: isPublished,
+    timeSlots: timeSlotArr,
   });
 }
 
@@ -212,7 +321,7 @@ var data;
 async function RenderDocs(){
   
 
-  await deleteDoc(doc(db, "Polls", "aH00CiJKm46SuuD3aUg7"));
+  //await deleteDoc(doc(db, "Polls", "aH00CiJKm46SuuD3aUg7"));
   getCities(db).then((snapshot) => {
     data = snapshot.docs.map((doc) => ({
       id: doc.id,
