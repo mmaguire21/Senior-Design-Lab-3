@@ -1,6 +1,8 @@
 import React from "react"
 import Calendar from "react-calendar"
 import DateTime from 'react-datetime'
+import styled from "styled-components";
+import Layout from "../../components/layout_home";
 import 'react-calendar/dist/Calendar.css';
 import "react-datetime/css/react-datetime.css";
 
@@ -33,6 +35,131 @@ const firebaseConfig = {
   measurementId: "G-4JNWPN5MW8"
 
 };
+
+const theme = {
+  blue: {
+      default: "#3f51b5",
+      hover: "#283593"
+  },
+  pink: {
+      default: "#c91751",
+      hover: "#ad1457"
+  }
+};
+
+const SubmitButton = styled.button`
+background-color: ${(props) => theme[props.theme].default};
+color: white;
+position: absolute;
+top:px;
+left:450px;
+padding: 5px 15px;
+border-radius: 5px;
+outline: 0;
+text-transform: uppercase;
+margin: 10px 0;
+cursor: pointer;
+box-shadow: 0 2px 2px lightgray;
+transition: ease background-color 250ms;
+
+&:hover {
+  background-color: ${(props) => theme[props.theme].hover};
+}
+
+&:disabled {
+  cursor: default;
+  opacity: 0.7;
+}`;
+
+SubmitButton.defaultProps = {
+  theme: "blue"
+};
+
+const SaveButton = styled.button`
+background-color: ${(props) => theme[props.theme].default};
+color: white;
+position: absolute;
+top:800px;
+left:560px;
+padding: 5px 15px;
+border-radius: 5px;
+outline: 0;
+text-transform: uppercase;
+margin: 10px 0;
+cursor: pointer;
+box-shadow: 0 2px 2px lightgray;
+transition: ease background-color 250ms;
+
+&:hover {
+  background-color: ${(props) => theme[props.theme].hover};
+}
+
+&:disabled {
+  cursor: default;
+  opacity: 0.7;
+}`;
+
+SaveButton.defaultProps = {
+  theme: "blue"
+};
+
+const CancelButton = styled.button`
+background-color: ${(props) => theme[props.theme].default};
+color: white;
+position: absolute;
+top:800px;
+left:650px;
+padding: 5px 15px;
+border-radius: 5px;
+outline: 0;
+text-transform: uppercase;
+margin: 10px 0;
+cursor: pointer;
+box-shadow: 0 2px 2px lightgray;
+transition: ease background-color 250ms;
+
+&:hover {
+  background-color: ${(props) => theme[props.theme].hover};
+}
+
+&:disabled {
+  cursor: default;
+  opacity: 0.7;
+}`;
+
+CancelButton.defaultProps = {
+  theme: "blue"
+};
+
+const InviteButton = styled.button`
+background-color: ${(props) => theme[props.theme].default};
+color: white;
+position: absolute;
+top:110px;
+left:800px;
+padding: 5px 15px;
+border-radius: 5px;
+outline: 0;
+text-transform: uppercase;
+margin: 10px 0;
+cursor: pointer;
+box-shadow: 0 2px 2px lightgray;
+transition: ease background-color 250ms;
+
+&:hover {
+  background-color: ${(props) => theme[props.theme].hover};
+}
+
+&:disabled {
+  cursor: default;
+  opacity: 0.7;
+}`;
+
+InviteButton.defaultProps = {
+  theme: "blue"
+};
+
+
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -201,10 +328,12 @@ export default class Create extends React.Component {
 
   render() {
     return (
+      <Layout>
         <div>
-        
+        <p><u><b>Step 1: Poll Information</b></u></p>
+        <p>
         <label>
-        Title
+        Title:  
         <input
             type="text"
             name="title"
@@ -213,7 +342,7 @@ export default class Create extends React.Component {
         />
         </label>
         <label>
-        Location
+            Location:  
         <input
             type="text"
             name="location"
@@ -221,8 +350,10 @@ export default class Create extends React.Component {
             onChange={this.handleInputChange}
         />
         </label>
+        </p>
+        <p>
         <label>
-        Notes and Comments
+        Notes and Comments:  
         <input
             type="text"
             name="notesComments"
@@ -230,6 +361,7 @@ export default class Create extends React.Component {
             onChange={this.handleInputChange}
         />
         </label>
+        </p>
         <label>
         Select your Time Zone:
         <select name="timeZone" timeZone={this.state.timeZone} onChange={this.handleInputChange}>   
@@ -242,10 +374,7 @@ export default class Create extends React.Component {
             <option timeZone="HAST">Hawaii-Aleutian Standard Time</option>
         </select>
         </label>
-            
-            
-        <br/>
-        <br/>
+        <p><u><b>Step 2: Date and Times</b></u></p>
         <Calendar 
             selectRange={this.range}
             onChange={this.handleCalendarChange}
@@ -512,7 +641,7 @@ export default class Create extends React.Component {
                 onChange={this.handleInputChange}
             />
             </label>
-            <button type="submit">Add Invite</button>
+            <InviteButton type="submit">Add Invite</InviteButton>
           </form>
 
          
@@ -526,15 +655,16 @@ export default class Create extends React.Component {
           onChange={this.handleDeadlineChange}
         />
         <form onSubmit={this.handlePublish}>
-          <button type="submit">Publish</button>
+          <SubmitButton type="submit">Publish</SubmitButton>
         </form>
         <form onSubmit={this.handleSave}>
-          <button type="submit">Save</button>
+          <SaveButton type="submit">Save</SaveButton>
         </form>
         
-        <button type="submit">Cancel</button>
+        <CancelButton type="submit">Cancel</CancelButton>
 
       </div>
+      </Layout>
     )
   }
 }
