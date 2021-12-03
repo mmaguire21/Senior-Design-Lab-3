@@ -491,7 +491,7 @@ export default class Create extends React.Component {
             <input
                 type="text"
                 name="invite"
-                Placeholder="email"
+                Placeholder="Phone Number"
                 value={this.state.invite}
                 onChange={this.handleInputChange}
             />
