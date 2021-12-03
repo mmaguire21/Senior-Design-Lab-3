@@ -79,8 +79,13 @@ function RenderDocs(){
 let polls = [];
 
 function getData(){
-  polls[0] = data[0]
-  polls[1] = data[1].title
+  polls[0] = data[1].title
+  polls[1] = data[1].location
+  polls[2] = data[1].timeZone
+  polls[3] = data[1].startDate
+  polls[4] = data[1].startTime
+  polls[5] = data[1].endTime
+  polls[6] = data[1].notesComments
   /*let i = 0;
     while (i < i) {
         polls[i] = data[i];

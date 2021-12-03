@@ -13,7 +13,7 @@ const IndexPage = () => {
       <p>Broken Engineers Doodle Poll </p>
       <label> Looking for your next poll look no further! </label>
 
-      <img width= "300" height = "300" src={poll} alt = "poll"></img>
+      <img width= "350" height = "350" src={poll} alt = "poll"></img>
 
       
       </Layout>
