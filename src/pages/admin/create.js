@@ -9,7 +9,10 @@ import "react-datetime/css/react-datetime.css";
 
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, addDoc, getDoc } from 'firebase/firestore/lite';
-import { doc, setDoc } from "firebase/firestore"; 
+import {
+  updateDoc,
+  doc
+ } from '@firebase/firestore/lite';
 
 
 // Follow this pattern to import other Firebase services
@@ -50,9 +53,7 @@ const theme = {
 const SubmitButton = styled.button`
 background-color: ${(props) => theme[props.theme].default};
 color: white;
-position: absolute;
-top:px;
-left:450px;
+position: bottom;
 padding: 5px 15px;
 border-radius: 5px;
 outline: 0;
@@ -78,9 +79,9 @@ SubmitButton.defaultProps = {
 const SaveButton = styled.button`
 background-color: ${(props) => theme[props.theme].default};
 color: white;
-position: absolute;
-top:800px;
-left:560px;
+position: relative;
+bottom:48px;
+left:125px;
 padding: 5px 15px;
 border-radius: 5px;
 outline: 0;
@@ -106,9 +107,9 @@ SaveButton.defaultProps = {
 const CancelButton = styled.button`
 background-color: ${(props) => theme[props.theme].default};
 color: white;
-position: absolute;
-top:800px;
-left:650px;
+position: relative;
+bottom: 97px;
+left: 225px;
 padding: 5px 15px;
 border-radius: 5px;
 outline: 0;
@@ -135,8 +136,8 @@ const InviteButton = styled.button`
 background-color: ${(props) => theme[props.theme].default};
 color: white;
 position: absolute;
-top:110px;
-left:800px;
+top:743px;
+left:570px;
 padding: 5px 15px;
 border-radius: 5px;
 outline: 0;
@@ -164,12 +165,23 @@ InviteButton.defaultProps = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+var docLength;
+var idList = []; 
+
 // Get a list of cities from your database
 async function getCities(db) {
   const citiesCol = collection(db, 'Polls');
   const citySnapshot = await getDocs(citiesCol);
   const cityList = citySnapshot.docs.map(doc => doc.data());
-  return cityList;
+  idList = citySnapshot.docs.map(doc => doc.id);
+  docLength = idList.length;
+  return citySnapshot;
+}
+
+async function editPoll(db, pollIndex){
+  const docRef = doc(db, 'Polls/'.concat(idList[pollIndex]));
+  const docSnap = await getDoc(docRef);
+  await updateDoc(docRef, "location", 'Editted Poll');
 }
 
 async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTime, numBlocks, sesh, restrictS, restrictP, deadline, invite, invitees, isPublished) {
@@ -192,12 +204,27 @@ async function savePoll(db, title, loc, notes, zone, startDate, startTime, endTi
   });
 }
 
-getCities(db).then((response) => console.log(response[0].title));
 
+var data;
+
+function RenderDocs(){
+  getCities(db).then((snapshot) => {
+    data = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    console.log(data[0].title); 
+    
+    // [ { id: 'glMeZvPpTN1Ah31sKcnj', title: 'The Great Gatsby' } ]
+  });
+}
+
+RenderDocs()
+
+//console.log(data[0].title)
 
 export default class Create extends React.Component {
   range = true;
-
   state = {
     title: "",
     location: "",
@@ -214,6 +241,27 @@ export default class Create extends React.Component {
     invite: [],
     invitees: [],
     isPublished: false,
+  }
+
+  renderModify = event => {
+    event.preventDefault()
+    this.setState({
+      title: data[0].title,
+      location: data[0].location,
+      notesComments: data[0].notesComments,
+      timeZone: data[0].timeZone,
+      startDate: data[0].startDate,
+      startTime: data[0].startTime,
+      endTime: data[0].endTime,
+      numBlocks: data[0].numBlocks,
+      sessionTime: data[0].sessionTime, 
+      restrictSlots: data[0].restrictSlots,
+      restrictNumParticipants: data[0].restrictNumParticipants,
+      deadline: data[0].deadline,
+      invite: data[0].invite,
+      invitees: data[0].invitees,
+      isPublished: data[0].isPublished,
+    })
   }
   handleInputChange = event => {
     const target = event.target
@@ -337,6 +385,7 @@ export default class Create extends React.Component {
         <input
             type="text"
             name="title"
+            placeholder="Title"
             value={this.state.title}
             onChange={this.handleInputChange}
         />
@@ -346,6 +395,7 @@ export default class Create extends React.Component {
         <input
             type="text"
             name="location"
+            Placeholder="Location"
             value={this.state.location}
             onChange={this.handleInputChange}
         />
@@ -357,6 +407,7 @@ export default class Create extends React.Component {
         <input
             type="text"
             name="notesComments"
+            Placeholder="Notes and Comments"
             value={this.state.notesComments}
             onChange={this.handleInputChange}
         />
@@ -379,6 +430,7 @@ export default class Create extends React.Component {
             selectRange={this.range}
             onChange={this.handleCalendarChange}
         />
+        <br></br>
         <label>
             Start time:
             <select name="startTime" startTime={this.state.startTime} onChange={this.handleStartOrEndTimeChange}>   
@@ -584,25 +636,31 @@ export default class Create extends React.Component {
 
             
             <label>
-            Number of Blocks
+           <p>Number of Blocks:
             <input
                 type="text"
                 name="numBlocks"
+                Placeholder="Number of Sessions"
                 value={this.state.numBlocks}
                 onChange={this.handleBlocksInputChange}
             />
+            </p>
             </label>
             <label>
-            Length of Session
+              <p>
+            Length of Session:
             <input
                 type="text"
                 name="sessionTime"
+                Placeholder="Length of each Session"
                 value={this.state.sessionTime}
                 onChange={this.handleBlocksInputChange}
             />
+            </p>
             </label>
             {/* restrict votes per slot */}
             <label>
+              <p>
               <input
                 type="checkbox"
                 name="restrictSlots"
@@ -610,9 +668,12 @@ export default class Create extends React.Component {
                 onChange={this.handleRestrictSlots}
               />
               Restrict votes per slot 
+              </p>
             </label>
+          
             {/* restrict votes per participant */}
             <label>
+              <p>
               <input
                 type="checkbox"
                 name="restrictNumParticipants"
@@ -620,34 +681,25 @@ export default class Create extends React.Component {
                 onChange={this.handleRestrictParticipants}
               />
               Restrict votes per participant
-              
+              </p>
             </label>
-                
-        <br/>
-        <RenderList emailList={this.state.invitees}/>
-
-        <br/>
         <label>
-          <br/>
-          <h4>
-            Invite
-          </h4>
+        <p><u><b>Step 3: Invite Participants</b></u></p>
+            Invite:
           <form onSubmit={this.handleInviteSubmit}>
             <label>
             <input
                 type="text"
                 name="invite"
+                Placeholder="email"
                 value={this.state.invite}
                 onChange={this.handleInputChange}
             />
             </label>
+            <RenderList emailList={this.state.invitees}/>
             <InviteButton type="submit">Add Invite</InviteButton>
           </form>
-
-         
-
-          <br/>
-          <br/>
+          <p><u><b>Step 4: Set a Deadline</b></u></p>
           Deadline:
         </label>
 
@@ -662,6 +714,10 @@ export default class Create extends React.Component {
         </form>
         
         <CancelButton type="submit">Cancel</CancelButton>
+
+        <form onSubmit={this.renderModify}>
+          <button type="submit">render</button>
+        </form>
 
       </div>
       </Layout>

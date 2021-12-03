@@ -6,6 +6,8 @@ import styled from "styled-components";
 var uadmin = "Broken";
 var padmin = "123";
 
+
+//Styling of buttons
 const theme = {
   blue: {
       default: "#3f51b5",
@@ -21,7 +23,7 @@ const Button = styled.button`
 background-color: ${(props) => theme[props.theme].default};
 color: white;
 position: absolute;
-top:110px;
+top:150px;
 left:500px;
 padding: 5px 15px;
 border-radius: 5px;
@@ -79,10 +81,12 @@ export default class IndexPage extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <Layout>
+          <br></br>
           <p>Username:
           <input
             type="text"
             name="Username"
+            Placeholder="Admin Username"
             value={this.state.Username}
             onChange={this.handleInputChange}
           />
@@ -91,6 +95,7 @@ export default class IndexPage extends React.Component {
           <input
             type="text"
             name="Password"
+            Placeholder="Admin Password"
             value={this.state.Password}
             onChange={this.handleInputChange}
           />
